@@ -131,10 +131,6 @@ def items_create
 end
 items_create
 
-bowls = Item.all.filter{|item| item.category == "Bowl"}
-bowl_names = bowls.map{|bowl| bowl.name}
-
-
 # USERS
 puts "🌱 Seeding users..."
 10.times do
@@ -142,16 +138,16 @@ puts "🌱 Seeding users..."
     username: Faker::Name.name,
     password: "123",
     image: Faker::Avatar.image,
-    fav_bowl: bowls.find(rand(1..bowls.length)),
-    diet: diets.find(rand(1..diets.length))
+    fav_bowl: bowl_names[rand(0..(bowl_names.length-1))],
+    diet: diets[rand(0..(diets.length-1))]
   )
 end
 User.create(
   username: "test",
   password: "123",
   image: Faker::Avatar.image,
-  fav_bowl: bowls.find(rand(1..bowls.length)),
-  diet: diets.find(rand(1..diets.length))
+  fav_bowl: bowl_names[rand(0..(bowl_names.length-1))],
+  diet: diets[rand(0..(diets.length-1))]
 )
 
 

@@ -1,25 +1,40 @@
-import logo from './logo.svg';
+import React from "react"
+import { Route, Switch, useHistory } from "react-router-dom";
+import { useEffect, useState } from "react"
 import './App.css';
 
-function App() {
+import Header from './components/Header'
+import Menu from './components/Menu'
+import Login from './components/Login'
+
+export default function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    // auto-login
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((currentUser) => {
+          setCurrentUser(currentUser)
+        });
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <Switch>
+        <Route path="/menu">
+          <Menu />
+        </Route>
+        <Route path="/login">
+          <Login setCurrentUser={setCurrentUser} history={history} />
+        </Route>
+      </Switch>
+
     </div>
   );
 }
-
-export default App;
