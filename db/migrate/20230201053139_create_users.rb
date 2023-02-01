@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :username
       t.string :password_digest
       t.string :image
-      t.integer :favorite_dish
+      t.string :fav_bowl
       t.string :diet
 
       t.timestamps
