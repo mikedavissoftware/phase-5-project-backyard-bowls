@@ -1,13 +1,14 @@
 import {useState} from "react"
 
-
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
 
 export default function Login({setCurrentUser, history}) {
   const [showLogin, setShowLogin] = useState(true);
 
   const redirect = () => {
-    history.push('/me');
+    history.push('/menu');
   }
 
   return (
@@ -25,14 +26,12 @@ export default function Login({setCurrentUser, history}) {
         </>
       ) : (
         <>
-          <SignUpForm setCurrentUser={setCurrentUser} redirect={redirect} />
+          <SignupForm setCurrentUser={setCurrentUser} redirect={redirect} />
           
-          <p>
-            Already have an account? &nbsp;
-            <button onClick={redirect}>
-              Log In
-            </button>
-          </p>
+          <p>Already have an account?</p>
+          <button onClick={redirect}>
+            Log In
+          </button>
         </>
       )}
     </div>

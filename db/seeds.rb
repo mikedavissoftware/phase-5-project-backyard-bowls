@@ -15,10 +15,9 @@ diets = [
   "Keto"
 ]
 
-
 # ITEMS
 puts "🌱 Seeding items..."
-def items_create
+# def items_create
   Item.create(
     name: "Spicy Switchback",
     category: "Bowl",
@@ -128,8 +127,21 @@ def items_create
     dressing: "NA",
     price: 3
   )
-end
-items_create
+  Item.create(
+    name: diets,
+    category: "Diets",
+    image: "NA",
+    base: "NA",
+    protein: "NA",
+    veggies: "NA",
+    dressing: "NA",
+    price: 0
+  )
+# end
+# items_create
+
+bowls = Item.all.filter{|item| item.category == "Bowl"}
+bowl_names = bowls.map{|bowl| bowl.name}
 
 # USERS
 puts "🌱 Seeding users..."
