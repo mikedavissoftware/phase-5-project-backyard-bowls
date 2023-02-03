@@ -17,6 +17,10 @@ export default function Header({currentUser, setCurrentUser}) {
     <div className="App-header">
       <h1>Backyard Bowls</h1>
       <nav>
+        <a href="/">
+          Home
+        </a>
+        <br></br>
         <a href="/menu">
           Menu
         </a>
