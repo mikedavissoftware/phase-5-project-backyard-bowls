@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react"
 
 
-export default function SignupForm({setCurrentUser, redirect}) {
+export default function SignupForm({setCurrentUser, redirect, items}) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
@@ -9,18 +9,7 @@ export default function SignupForm({setCurrentUser, redirect}) {
   const [favBowl, setFavBowl] = useState("")
   const [diet, setDiet] = useState("")
 
-  const [items, setItems] = useState([])
   const [errors, setErrors] = useState([]);
-
-
-  useEffect(() => {
-    fetch("/items")
-    .then(r => r.json())
-    .then(itemsData => {
-      console.log(itemsData)
-      setItems(itemsData)
-    })
-  }, [])
 
   const bowls = items.filter(item => {
     return item.category === "Bowl"

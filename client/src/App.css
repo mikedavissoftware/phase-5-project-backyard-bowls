@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+
+.items-container {
+  display: flex;
+  flex-wrap: wrap
+}
+
+.item {
+  width: 45%;
+  padding: 2%
+}
+
+.item > ul {
+  list-style-type: none;
+}
+
+
+a {
+  cursor: pointer
+}
+a:link {
+  color: green;
+}
+a:visited {
+  color: orange;
+}
+a:hover {
+  color: lightgreen;
+}
+a:active {
+  color: rgb(198, 255, 112);
+}
+
+img {
+  display: block;
+  margin: auto;
+}

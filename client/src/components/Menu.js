@@ -1,65 +1,41 @@
 import {useEffect, useState} from "react"
 
+import BowlCollection from "./BowlCollection"
+import SidesCollection from "./SidesCollection"
 
 
-export default function Menu() {
-
-  const [items, setItems] = useState([])
+export default function Menu({items, currentUser}) {
+  const [likes, setLikes] = useState([])
 
   useEffect(() => {
-    fetch("/items")
+    fetch("/likes")
     .then(r => r.json())
-    .then(itemsData => {
-      setItems(itemsData)
+    .then(allLikes => {
+      setLikes(allLikes)
     })
   }, [])
-
+  
   const bowls = items.filter(item => {
     return item.category === "Bowl"
-  })
-  const bowlComponents = bowls.map(bowl => {
-    const vegList = bowl.veggies.slice(1, bowl.veggies.length-1)
-    const vegArray = vegList.split(", ")
-    const vegComponents = vegArray.map(veggie => {
-      return <li>{veggie}</li>
-    })
-
-    return (
-      <div className="bowl-item">
-        <h2>{bowl.name} - $8 small / $13 large</h2>
-        <img src={bowl.image} style={{height: "150px"}}></img>
-        <h3>Ingredients:</h3>
-        <p><strong>Base: </strong>{bowl.base}</p>
-        <p><strong>Protein: </strong>{bowl.protein}</p>
-        <p><strong>Veggies: </strong></p>
-        <ul>
-          {vegComponents}
-        </ul>
-        <p><strong>Dressing: </strong>{bowl.dressing}</p>
-        <hr width="70%"></hr>
-      </div>
-    )
   })
 
   const sides = items.filter(item => {
     return item.category === "Side"
   })
-
   const drinks = items.filter(item => {
     return item.category === "Drink"
   })
-
-  console.log(sides)
-  console.log(drinks)
+  const sidesDrinks = [...sides, ...drinks]
 
   if (!items) return <h2>Loading...</h2>
 
   return (
-    <div>
+    <div className="menu-container">
       <h1>🥗 BOWLS 🥗</h1>
-      {bowlComponents}
-      <hr></hr>
-
+      <BowlCollection bowls={bowls} likes={likes} setLikes={setLikes} currentUser={currentUser} />
+      <hr width="50%"></hr>
+      <h1>🍠 SIDES & DRINKS 🍹</h1>
+      <SidesCollection sidesDrinks={sidesDrinks} likes={likes} setLikes={setLikes} currentUser={currentUser} />
     </div>
   )
 }

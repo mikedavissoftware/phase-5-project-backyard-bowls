@@ -11,7 +11,7 @@ export default function Header({currentUser, setCurrentUser}) {
     });
   }
 
-  console.log(currentUser)
+  // console.log(currentUser)
 
   return (
     <div className="App-header">

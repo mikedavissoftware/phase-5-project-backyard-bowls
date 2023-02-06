@@ -11,9 +11,6 @@ import MyAccount from "./components/MyAccount"
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
-
-  const history = useHistory();
-
   useEffect(() => {
     // auto-login
     fetch("/me").then((r) => {
@@ -25,24 +22,40 @@ export default function App() {
     });
   }, []);
 
+  const history = useHistory();
+
+  const [items, setItems] = useState([])
+  useEffect(() => {
+    fetch("/items")
+    .then(r => r.json())
+    .then(itemsData => {
+      console.log(itemsData)
+      setItems(itemsData)
+    })
+  }, [])
+
+  if (!items) return <h2>Loading...</h2>
+
   return (
     <div className="App">
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      
       <Switch>
         <Route path="/menu">
-          <Menu />
+          <Menu items={items} currentUser={currentUser} />
         </Route>
         <Route path="/me">
-          <MyAccount currentUser={currentUser} />
+          <MyAccount currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </Route>
         <Route path="/login">
-          <Login setCurrentUser={setCurrentUser} history={history} />
+          <Login setCurrentUser={setCurrentUser} history={history} items={items} />
         </Route>
         <Route path="/">
           <Home />
         </Route>
       </Switch>
 
+      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </div>
   );
 }
