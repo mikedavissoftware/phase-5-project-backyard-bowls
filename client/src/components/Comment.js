@@ -2,9 +2,15 @@
 
 
 
-export default function Comment({comment}) {
+export default function Comment({comment, currentUser}) {
 
   const {content, rating, user} = comment
+
+  function deleteComment() {
+    fetch(`/comments/${comment.id}`, {
+      method: "DELETE",
+    })
+  }
 
   return (
     <div className="comment">
@@ -15,6 +21,11 @@ export default function Comment({comment}) {
         <h3>{user.username} rated this bowl {rating}/10</h3>
         <p>{content}</p>
         <p><em>{user.username}'s favorite bowl is <strong>{user.fav_bowl}</strong></em></p>
+        {(user.id === currentUser.id) ? (
+          <button onClick={deleteComment}>Delete This Comment</button>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   )

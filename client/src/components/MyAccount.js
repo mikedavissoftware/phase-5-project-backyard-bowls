@@ -1,24 +1,40 @@
-import {useState} from "react"
+import {useState, useEffect} from "react"
 
 
 
 export default function MyAccount({currentUser, setCurrentUser}) {
-  // console.log(currentUser)
+
+  const [bowlNames, setBowlNames] = useState([])
+  const [dietNames, setDietNames] = useState([])
+
+  useEffect(() => {
+    fetch("/items")
+    .then(r => r.json())
+    .then(items => {
+      setBowlNames(items.filter((item) => {
+        return item.category === "Bowl"
+      }))
+      const diets = items.filter((item) => {
+        return item.category === "Diets"
+      })
+      setDietNames(JSON.parse(diets[0].name))
+    })
+  }, [])
 
   const [showAccountEdit, setShowAccountEdit] = useState(false)
   function switchAccountEdit() {
     setShowAccountEdit(!showAccountEdit)
   }
 
-  const [errors, setErrors] = useState([])
-  const [formData, setFormData] = useState({
+  const newForm = {
     username:'',
     password:'',
     passwordConfirmation:'',
     image:'',
     favBowl:'',
     diet:''
-  })
+  }
+  const [formData, setFormData] = useState(newForm)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -28,7 +44,7 @@ export default function MyAccount({currentUser, setCurrentUser}) {
 
   function submitEdits(e) {
     e.preventDefault();
-    setErrors([]);
+    // setErrors([]);
 
     const editAccount = {
       username: formData.username,
@@ -51,12 +67,9 @@ export default function MyAccount({currentUser, setCurrentUser}) {
       console.log(editedAccount)
       setCurrentUser(editedAccount)
     })
-    // setCurrentUser({
-    //   username: "",
-    //   password: "",
-    // })
+    
+    setFormData(newForm)
   }
-
 
   if (!currentUser) return <h2>Loading...</h2>
 
@@ -123,6 +136,12 @@ export default function MyAccount({currentUser, setCurrentUser}) {
             value={formData.favBowl}
             onChange={handleChange}
           />
+
+          {/* <br></br>
+          <label><strong>Change Your Favorite Bowl: </strong></label>
+          <select>
+
+          </select> */}
 
           <br></br>
           <label><strong>Change Your Diet: </strong></label>

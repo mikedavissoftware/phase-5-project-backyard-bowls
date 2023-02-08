@@ -2,12 +2,12 @@ import {useState} from "react"
 
 import Comment from "./Comment"
 
-export default function CommentForm({itemId, comments, setComments, currentUser}) {
+export default function CommentEditForm({itemId, currentUserComment, currentUser}) {
   console.log(currentUser)
 
-  const [showCommentForm, setShowCommentForm] = useState(false)
-  function toggleCommentForm() {
-    setShowCommentForm(!showCommentForm)
+  const [showCommentEditForm, setShowCommentEditForm] = useState(false)
+  function toggleCommentEditForm() {
+    setShowCommentEditForm(!showCommentEditForm)
   }
 
   function numberOptions(max) {        
@@ -22,9 +22,7 @@ export default function CommentForm({itemId, comments, setComments, currentUser}
 
   const newForm = {
     rating: 10,
-    content: "",
-    user_id: currentUser.id,
-    item_id: itemId
+    content: ""
   }
   const [formData, setFormData] = useState(newForm)
 
@@ -34,13 +32,13 @@ export default function CommentForm({itemId, comments, setComments, currentUser}
     console.log(formData)
   }
 
-  function submitComment(e) {
+  function submitEditComment(e) {
     e.preventDefault()
 
     console.log("submit button pushed")
 
-    fetch(`/comments`, {
-      method: "POST",
+    fetch(`/comments/${currentUserComment.id}`, {
+      method: "PATCH",
       headers: {
           "Content-Type": "application/json",
       },
@@ -52,18 +50,18 @@ export default function CommentForm({itemId, comments, setComments, currentUser}
     // })
 
     setFormData(newForm)
-    setShowCommentForm(false)
+    setShowCommentEditForm(false)
   }
 
   return (
     <div>
-      {(!showCommentForm) ? (
-        <button onClick={() => toggleCommentForm()}>Show Comment Form</button>
+      {(!showCommentEditForm) ? (
+        <button onClick={() => toggleCommentEditForm()}>Edit My Comment</button>
       ) : (
         <>
-        <button onClick={() => toggleCommentForm()}>Hide Comment Form</button>
-        <h4>Leave your comment below!</h4>
-        <form onSubmit={submitComment}>
+        <button onClick={() => toggleCommentEditForm()}>Hide Edit Form</button>
+        <h4>Edit your comment below!</h4>
+        <form onSubmit={submitEditComment}>
           <label><strong>Rating: </strong></label>
           <br></br>
           <select name="rating" onChange={(e) => {handleChange(e)}}>

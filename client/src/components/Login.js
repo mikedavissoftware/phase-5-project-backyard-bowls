@@ -4,14 +4,12 @@ import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
 
-export default function Login({setCurrentUser, history, items}) {
+export default function Login({setCurrentUser, history}) {
   const [showLogin, setShowLogin] = useState(true);
 
   const redirect = () => {
     history.push('/menu');
   }
-
-  if (!items) return <h2>Loading...</h2>
 
   return (
     <div>
@@ -27,7 +25,7 @@ export default function Login({setCurrentUser, history, items}) {
         </>
       ) : (
         <>
-          <SignupForm setCurrentUser={setCurrentUser} redirect={redirect} items={items} />
+          <SignupForm setCurrentUser={setCurrentUser} redirect={redirect} />
           <p>Already have an account?</p>
           <button onClick={redirect}>
             Log In
