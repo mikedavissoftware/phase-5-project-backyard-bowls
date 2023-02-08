@@ -8,4 +8,5 @@ class User < ApplicationRecord
 
   validates_presence_of :username, :diet
   validates_uniqueness_of :username
+  # validates :password, length: in: {8..20}
 end

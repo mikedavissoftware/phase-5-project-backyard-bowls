@@ -8,9 +8,12 @@ import Menu from './components/Menu'
 import Login from './components/Login'
 import Home from './components/Home'
 import MyAccount from "./components/MyAccount"
+import BowlPage from "./components/BowlPage"
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const history = useHistory()
+
+  const [currentUser, setCurrentUser] = useState(null)
   useEffect(() => {
     // auto-login
     fetch("/me").then((r) => {
@@ -22,14 +25,21 @@ export default function App() {
     });
   }, []);
 
-  const history = useHistory();
+  const [likes, setLikes] = useState([])
+  useEffect(() => {
+    fetch("/likes")
+    .then(r => r.json())
+    .then(allLikes => {
+      setLikes(allLikes)
+    })
+  }, [])
 
   const [items, setItems] = useState([])
   useEffect(() => {
     fetch("/items")
     .then(r => r.json())
     .then(itemsData => {
-      console.log(itemsData)
+      // console.log(itemsData)
       setItems(itemsData)
     })
   }, [])
@@ -41,8 +51,11 @@ export default function App() {
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
       
       <Switch>
+        <Route path="/items/:id">
+          <BowlPage items={items} likes={likes} setLikes={setLikes} currentUser={currentUser} />
+        </Route>
         <Route path="/menu">
-          <Menu items={items} currentUser={currentUser} />
+          <Menu items={items} currentUser={currentUser} likes={likes} setLikes={setLikes} />
         </Route>
         <Route path="/me">
           <MyAccount currentUser={currentUser} setCurrentUser={setCurrentUser} />

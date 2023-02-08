@@ -2,16 +2,20 @@ import {useState} from "react"
 import {Link} from "react-router-dom"
 
 
-
 export default function BowlCard({bowl, likes, setLikes, currentUser}) {
 
-  console.log(likes)
 
-  const likedByCurrentUser = bowl.likes.map((like => {
-    return like.user_id
-  })).includes(currentUser.id)
+  const isLikedByCurrentUser = (currentUser) ? (
+    bowl.likes.map(((like) => {return like.user_id})).includes(currentUser.id)
+  ) : (
+    false
+  )
+  const [showLikeButton, setShowLikeButton] = useState(isLikedByCurrentUser)
 
-  const [showLikeButton, setShowLikeButton] = useState(likedByCurrentUser)
+  const [itemLikes, setItemLikes] = useState(likes.filter((like) => {
+    return like.item_id === bowl.id
+  }))
+  console.log(itemLikes)
   
   const vegList = bowl.veggies.slice(1, bowl.veggies.length-1)
   const vegArray = vegList.split(", ")
@@ -19,47 +23,43 @@ export default function BowlCard({bowl, likes, setLikes, currentUser}) {
     return <li>{veggie.slice(1, veggie.length-1)}</li>
   })
 
-  function createLike(itemId) {
+  function createLike() {
     fetch(`/likes`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
       },
-      body: JSON.stringify({user_id: currentUser.id, item_id: itemId})
+      body: JSON.stringify({user_id: currentUser.id, item_id: bowl.id})
     })
     .then(r => r.json())
-    .then(newLike => setLikes(...likes, newLike))
-    console.log("create like")
+    .then(newLike => {
+      setLikes([...likes, newLike])
+      setItemLikes([...itemLikes, newLike])
+    })
     console.log(likes)
-
+    console.log(itemLikes)
     setShowLikeButton(!showLikeButton)
   }
 
-  function deleteLike(itemId) {
-    const itemLikes = likes.filter((like) => {
-      return like.item_id === itemId
-    })
-    console.log("item likes")
+  function deleteLike() {
+    console.log("delete")
     console.log(itemLikes)
-    const userLike = itemLikes.filter((itemLike) => {
+    const userLike = itemLikes.find((itemLike) => {
       return itemLike.user_id === currentUser.id
     })
-    console.log("user like")
-    console.log(userLike)
-    fetch(`/likes/${userLike[0].id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
+    fetch(`/likes/${userLike.id}`, {
+      method: "DELETE"
     })
     setLikes(likes.filter((like) => {
-      return like.id !== userLike[0].id
+      return like.id !== userLike.id
+    }))
+    setItemLikes(itemLikes.filter((like) => {
+      return like.id !== userLike.id
     }))
     console.log(likes)
-
+    console.log(itemLikes)
     setShowLikeButton(!showLikeButton)
   }
-
 
   return (
     <div className="item">
@@ -67,15 +67,17 @@ export default function BowlCard({bowl, likes, setLikes, currentUser}) {
       <h3>$8 small / $13 large</h3>
       <h3>{bowl.likes.length} People Liked this Bowl</h3>
       <img src={bowl.image} style={{height: "150px"}}></img>
+      <br></br>
       {
         showLikeButton ? 
         (
-          <a onClick={() => {deleteLike(bowl.id)}}>🧡 You Like this Bowl</a>
+          <button onClick={() => {deleteLike()}}>🧡 Unlike this Bowl</button>
         ) : 
         (
-          <a onClick={() => {createLike(bowl.id)}}>♡ Click to Like this Bowl</a>
+          <button onClick={() => {createLike()}}>♡ I like this Bowl</button>
         )
       }
+      <hr width="45%"></hr>
       <h3>Ingredients:</h3>
       <p><strong>Base: </strong>{bowl.base}</p>
       <p><strong>Protein: </strong>{bowl.protein}</p>

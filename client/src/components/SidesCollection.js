@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 
 
 
-export default function SidesCollection({sidesDrinks, likes, setLikes, currentUser}) {
+export default function SidesCollection({sidesDrinks}) {
 
   const sidesComponents = sidesDrinks.map(item => {
     return (

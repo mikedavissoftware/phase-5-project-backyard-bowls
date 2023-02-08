@@ -24,10 +24,6 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -39,21 +35,27 @@
 
 .items-container {
   display: flex;
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  margin: auto;
 }
 
 .item {
   width: 45%;
-  padding: 2%
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: lightcyan;
+  border-radius: 20px;
 }
 
 .item > ul {
   list-style-type: none;
+  padding-left: 0;
 }
 
 
 a {
-  cursor: pointer
+  cursor: pointer;
 }
 a:link {
   color: green;
@@ -71,4 +73,65 @@ a:active {
 img {
   display: block;
   margin: auto;
+}
+
+.container {
+  padding: 15px;
+}
+
+.nav-link {
+  padding: 10px;
+}
+
+button {
+  margin: 10px;
+}
+
+.comment {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+  background-color: lightcyan;
+  margin: 15px;
+  border-radius: 20px;
+  animation: fadeIn 1s;
+  -webkit-animation: fadeIn 1s;
+  -moz-animation: fadeIn 1s;
+  -o-animation: fadeIn 1s;
+  -ms-animation: fadeIn 1s;
+}
+.comment-picture {
+  margin: 10px;
+}
+.comment-picture > img {
+  height: 150px;
+  border-radius: 10px;
+}
+.comment-content {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#comment-box {
+  
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-webkit-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-ms-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

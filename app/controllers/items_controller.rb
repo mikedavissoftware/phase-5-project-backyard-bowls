@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
 
   def show
     item = Item.find(params[:id])
-    render json: item
+    render json: item, include: ['likes', 'comments.user']
   end
 
 end

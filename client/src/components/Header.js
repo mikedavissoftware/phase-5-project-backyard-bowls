@@ -1,5 +1,5 @@
-
-
+import {NavLink} from "react-router-dom"
+// import HeaderLogo from "../images/wordmark-clearframe-green.png"
 
 
 export default function Header({currentUser, setCurrentUser}) {
@@ -15,36 +15,32 @@ export default function Header({currentUser, setCurrentUser}) {
 
   return (
     <div className="App-header">
+      {/* <HeaderLogo/> */}
       <h1>Backyard Bowls</h1>
       <nav>
-        <a href="/">
+        <NavLink to="/" className="nav-link">
           Home
-        </a>
-        <br></br>
-        <a href="/menu">
+        </NavLink>|
+        <NavLink to="/menu" className="nav-link">
           Menu
-        </a>
+        </NavLink>|
         {currentUser ? (
           <>
-            <br></br>
-            <a href="/me">
+            <NavLink to="/me" className="nav-link">
               My Account
-            </a>
-            <br></br>
-            <a href="/logout" onClick={handleLogoutClick}>
+            </NavLink>|
+            <NavLink to="/logout" className="nav-link" onClick={handleLogoutClick}>
               Log Out
-            </a>
+            </NavLink>
           </>
         ) : (
           <>
-            <br></br>
-            <a href="/login">
+            <NavLink to="/login" className="nav-link">
               Log In
-            </a>
+            </NavLink>
           </>
         )}
       </nav>
-      
     </div>
   )
 }

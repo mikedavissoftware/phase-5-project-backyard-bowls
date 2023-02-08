@@ -170,6 +170,7 @@ puts "🌱 Seeding comments..."
   user_ids.map{|user_id|
     Comment.create(
       content: Faker::Lorem.paragraph(sentence_count: 3),
+      rating: rand(1..10),
       user_id: user_id,
       item_id: bowl_id
     )
