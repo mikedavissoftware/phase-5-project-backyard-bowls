@@ -8,7 +8,7 @@ export default function CommentForm({itemId, currentUser}) {
     setShowCommentForm(!showCommentForm)
   }
 
-  function numberOptions(max) {        
+  function numberOptions(max) {
     const numbersArray = []
     for (let i=0; i<max; i++) {
         numbersArray.push(
@@ -18,12 +18,30 @@ export default function CommentForm({itemId, currentUser}) {
     return numbersArray
   }
 
-  const [formData, setFormData] = useState({rating: 10, content: ""})
+  const [formData, setFormData] = useState({rating: 10, content: "", item_id: itemId, user_id: currentUser.id})
 
   function handleChange(event) {
     console.log(event.target.value);
     setFormData({...formData, [event.target.name]: event.target.value})
   }
+
+  function submitComment(e) {
+    e.preventDefault()
+    fetch("/comments",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(setFormData({
+      title: "",
+      artist: "",
+      genre: "",
+      link: "",
+    }))
+  }
+
   return (
     <div>
       {(!showCommentForm) ? (
@@ -32,7 +50,7 @@ export default function CommentForm({itemId, currentUser}) {
         <>
         <button onClick={() => toggleCommentForm()}>Hide Comment Form</button>
         <h4>Leave your comment below!</h4>
-        <form>
+        <form onSubmit={submitComment}>
           <label><strong>Rating: </strong></label>
           <br></br>
           <select name="rating" onChange={(e) => {handleChange(e)}}>

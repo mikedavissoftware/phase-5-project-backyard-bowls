@@ -8,6 +8,7 @@ export default function BowlPage({items, likes, setLikes, currentUser}) {
 
   const {id} = useParams()
   const [bowl, setBowl] = useState(null)
+  // const [comments, setComments] = useState([])
 
   useEffect(() => {
     fetch(`/items/${id}`)
@@ -16,9 +17,11 @@ export default function BowlPage({items, likes, setLikes, currentUser}) {
       setBowl(itemData)
       console.log(bowl)
     })
-  }, [])
+  }, [items])
 
   if (!bowl) return <h2>Loading...</h2>
+
+  // setComments(bowl.comments)
 
   return (
     <>

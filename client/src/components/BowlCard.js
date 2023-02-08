@@ -1,9 +1,10 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {Link} from "react-router-dom"
 
 
-export default function BowlCard({bowl, likes, setLikes, currentUser}) {
-
+export default function BowlCard({bowl, currentUser}) {
+  const [itemLikes, setItemLikes] = useState([])
+  useEffect()
 
   const isLikedByCurrentUser = (currentUser) ? (
     bowl.likes.map(((like) => {return like.user_id})).includes(currentUser.id)
@@ -12,9 +13,9 @@ export default function BowlCard({bowl, likes, setLikes, currentUser}) {
   )
   const [showLikeButton, setShowLikeButton] = useState(isLikedByCurrentUser)
 
-  const [itemLikes, setItemLikes] = useState(likes.filter((like) => {
-    return like.item_id === bowl.id
-  }))
+  // const [itemLikes, setItemLikes] = useState(likes.filter((like) => {
+  //   return like.item_id === bowl.id
+  // }))
   console.log(itemLikes)
   
   const vegList = bowl.veggies.slice(1, bowl.veggies.length-1)
