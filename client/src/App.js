@@ -25,43 +25,22 @@ export default function App() {
     });
   }, []);
 
-  const [likes, setLikes] = useState([])
-  useEffect(() => {
-    fetch("/likes")
-    .then(r => r.json())
-    .then(allLikes => {
-      setLikes(allLikes)
-    })
-  }, [])
-
-  const [items, setItems] = useState([])
-  useEffect(() => {
-    fetch("/items")
-    .then(r => r.json())
-    .then(itemsData => {
-      // console.log(itemsData)
-      setItems(itemsData)
-    })
-  }, [])
-
-  if (!items) return <h2>Loading...</h2>
-
   return (
     <div className="App">
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
       
       <Switch>
         <Route path="/items/:id">
-          <BowlPage items={items} likes={likes} setLikes={setLikes} currentUser={currentUser} />
+          <BowlPage currentUser={currentUser} />
         </Route>
         <Route path="/menu">
-          <Menu items={items} currentUser={currentUser} likes={likes} setLikes={setLikes} />
+          <Menu currentUser={currentUser} />
         </Route>
         <Route path="/me">
           <MyAccount currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </Route>
         <Route path="/login">
-          <Login setCurrentUser={setCurrentUser} history={history} items={items} />
+          <Login setCurrentUser={setCurrentUser} history={history} />
         </Route>
         <Route path="/">
           <Home />

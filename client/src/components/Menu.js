@@ -4,12 +4,30 @@ import BowlCollection from "./BowlCollection"
 import SidesCollection from "./SidesCollection"
 
 
-export default function Menu({items, currentUser, likes, setLikes}) {
+export default function Menu({currentUser}) {
+
+  const [allLikes, setAllLikes] = useState([])
+  useEffect(() => {
+    fetch("/likes")
+    .then(r => r.json())
+    .then(likesData => {
+      setAllLikes(likesData)
+    })
+  }, [])
   
+  const [items, setItems] = useState([])
+  useEffect(() => {
+    fetch("/items")
+    .then(r => r.json())
+    .then(itemsData => {
+      // console.log(itemsData)
+      setItems(itemsData)
+    })
+  }, [allLikes])
+
   const bowls = items.filter(item => {
     return item.category === "Bowl"
   })
-
   const sides = items.filter(item => {
     return item.category === "Side"
   })
@@ -23,7 +41,7 @@ export default function Menu({items, currentUser, likes, setLikes}) {
   return (
     <div className="menu-container">
       <h1>🥗 BOWLS 🥗</h1>
-      <BowlCollection bowls={bowls} likes={likes} setLikes={setLikes} currentUser={currentUser} />
+      <BowlCollection bowls={bowls} allLikes={allLikes} setAllLikes={setAllLikes} currentUser={currentUser} />
       <hr width="50%"></hr>
       <h1>🍠 SIDES & DRINKS 🍹</h1>
       <SidesCollection sidesDrinks={sidesDrinks} />
