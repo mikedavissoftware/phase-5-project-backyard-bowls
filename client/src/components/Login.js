@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useState, useEffect} from "react"
 
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
@@ -6,10 +6,19 @@ import SignupForm from "./SignupForm";
 
 export default function Login({setCurrentUser, history}) {
   const [showLogin, setShowLogin] = useState(true);
+  const [items, setItems] = useState([])
 
   const redirect = () => {
     history.push('/menu');
   }
+
+  useEffect(() => {
+    fetch("/items")
+    .then(r => r.json())
+    .then(itemsData => {
+      setItems(itemsData)
+    })
+  }, [])
 
   return (
     <div>
@@ -25,7 +34,7 @@ export default function Login({setCurrentUser, history}) {
         </>
       ) : (
         <>
-          <SignupForm setCurrentUser={setCurrentUser} redirect={redirect} />
+          <SignupForm setCurrentUser={setCurrentUser} redirect={redirect} items={items} />
           <p>Already have an account?</p>
           <button onClick={redirect}>
             Log In

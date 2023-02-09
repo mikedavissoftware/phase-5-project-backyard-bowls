@@ -21,13 +21,9 @@ export default function SignupForm({setCurrentUser, redirect, items}) {
     return <option value={name}>{name}</option>
   })
 
-  const dietArray = [
-    "Regular",
-    "Pescatarian",
-    "Vegetarian",
-    "Vegan",
-    "Keto"
-  ]
+  const dietArray = JSON.parse(items.find((item) => {
+    return item.category === "Diets"
+  }).name)
   const dietOptions = dietArray.map(diet => {
     return <option value={diet}>{diet}</option>
   })
