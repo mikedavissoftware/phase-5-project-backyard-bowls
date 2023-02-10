@@ -30,7 +30,7 @@ export default function LoginForm({setCurrentUser, redirect}) {
   return (
     <div>
       <form  onSubmit={handleSubmit}>
-        <label><strong>Username:</strong></label>
+        <label><strong>Username: </strong></label>
         <input
           type="text" 
           id="username" 
@@ -39,7 +39,8 @@ export default function LoginForm({setCurrentUser, redirect}) {
           onChange={(e) => setUsername(e.target.value)}
         />
 
-        <label><strong>Password:</strong></label>
+        <br></br>
+        <label><strong>Password: </strong></label>
         <input
           type="password"
           id="password"
@@ -48,6 +49,7 @@ export default function LoginForm({setCurrentUser, redirect}) {
           onChange={(e) => setPassword(e.target.value)}
         />
 
+        <br></br>
         <button type="submit">
           Log In
         </button>

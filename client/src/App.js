@@ -5,7 +5,7 @@ import './App.css';
 
 import Header from './components/Header'
 import Menu from './components/Menu'
-import Login from './components/Login'
+import LoginPage from './components/LoginPage'
 import Home from './components/Home'
 import MyAccount from "./components/MyAccount"
 import BowlPage from "./components/BowlPage"
@@ -40,7 +40,7 @@ export default function App() {
           <MyAccount currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </Route>
         <Route path="/login">
-          <Login setCurrentUser={setCurrentUser} history={history} />
+          <LoginPage setCurrentUser={setCurrentUser} history={history} />
         </Route>
         <Route path="/">
           <Home />

@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom"
 
 import BowlCard from "./BowlCard"
 import CommentSection from "./CommentSection"
+import BowlDetail from "./BowlDetail"
 
 export default function BowlPage({currentUser}) {
   const [comments, setComments] = useState([])
@@ -22,9 +23,10 @@ export default function BowlPage({currentUser}) {
 
   return (
     <>
-    <div className="items-container">
+    {/* <div className="items-container">
       <BowlCard key={bowl.id} bowl={bowl} currentUser={currentUser} />
-    </div>
+    </div> */}
+    <BowlDetail key={bowl.id} bowl={bowl} currentUser={currentUser} />
     <CommentSection comments={comments} setComments={setComments} currentUser={currentUser} />
     </>
   )

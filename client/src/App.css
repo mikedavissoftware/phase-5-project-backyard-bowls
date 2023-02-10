@@ -45,6 +45,18 @@
   margin-top: 5px;
   margin-bottom: 5px;
   background-color: lightcyan;
+  box-shadow: 5px 5px 3px rgb(0,0,0,.3);
+  border-style: solid;
+  border-color: rgb(249, 255, 171);
+  border-width: 5px;
+  border-radius: 20px;
+}
+.item:hover {
+  background-color: rgb(253, 255, 224);
+  box-shadow: 10px 10px 5px rgb(0,0,0,.3);
+  border-style: solid;
+  border-color: rgb(190, 255, 255);
+  border-width: 5px;
   border-radius: 20px;
 }
 
@@ -85,6 +97,10 @@ img {
 
 button {
   margin: 10px;
+}
+
+form {
+  margin: 15px;
 }
 
 .comment {

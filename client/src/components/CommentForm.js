@@ -62,7 +62,7 @@ export default function CommentForm({itemId, comments, setComments, currentUser}
       ) : (
         <>
         <button onClick={() => toggleCommentForm()}>Hide Comment Form</button>
-        <h4>Leave your comment below!</h4>
+        <p>Leave your comment below!</p>
         <form onSubmit={submitComment}>
           <label><strong>Rating: </strong></label>
           <br></br>

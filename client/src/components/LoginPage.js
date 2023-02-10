@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
 
-export default function Login({setCurrentUser, history}) {
+export default function LoginPage({setCurrentUser, history}) {
   const [showLogin, setShowLogin] = useState(true);
   const [items, setItems] = useState([])
 
@@ -22,6 +22,7 @@ export default function Login({setCurrentUser, history}) {
 
   return (
     <div>
+
       {showLogin ? (
         <>
           <LoginForm setCurrentUser={setCurrentUser} redirect={redirect} />
@@ -35,10 +36,12 @@ export default function Login({setCurrentUser, history}) {
       ) : (
         <>
           <SignupForm setCurrentUser={setCurrentUser} redirect={redirect} items={items} />
-          <p>Already have an account?</p>
-          <button onClick={redirect}>
-            Log In
-          </button>
+          <p>
+            Already have an account?
+            <button onClick={() => setShowLogin(true)}>
+              Log In
+            </button>
+          </p>
         </>
       )}
     </div>
