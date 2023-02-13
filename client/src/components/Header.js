@@ -14,9 +14,9 @@ export default function Header({currentUser, setCurrentUser}) {
   // console.log(currentUser)
 
   return (
-    <div className="App-header">
-      <img src={HeaderLogo} alt="Backyard Bowls Logo" />
-      <h1>Backyard Bowls</h1>
+    <div className="bg-banner bg-center bg-contain" className="App-header">
+      <img src={HeaderLogo} alt="Backyard Bowls Logo" className="drop-shadow-dark stroke-black" />
+      <h1 className="text-bybb text-xl font-serif font-bold">Backyard Bowls</h1>
       <nav>
         <NavLink to="/" className="nav-link">
           Home
