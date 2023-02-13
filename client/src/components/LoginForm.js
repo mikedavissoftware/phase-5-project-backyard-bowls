@@ -18,17 +18,20 @@ export default function LoginForm({setCurrentUser, redirect}) {
     }).then((r) => {
       if (r.ok) {
         r.json().then((currentUser) => setCurrentUser(currentUser));
+        redirect()
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
     });
-
-    console.log("ayyy")
-    redirect()
   }
+
+  const showErrors = errors.map((error) => {
+    return <h4 style={{color: "#dd0000"}}>{error}</h4>
+  })
 
   return (
     <div>
+      {showErrors}
       <form  onSubmit={handleSubmit}>
         <label><strong>Username: </strong></label>
         <input

@@ -2,10 +2,14 @@ import {useState, useEffect} from "react"
 
 
 
-export default function MyAccount({currentUser, setCurrentUser}) {
+export default function AccountPage({currentUser, setCurrentUser, history}) {
 
   const [bowlNames, setBowlNames] = useState([])
   const [dietNames, setDietNames] = useState([])
+
+  const redirect = () => {
+    history.push('/');
+  }
 
   useEffect(() => {
     fetch("/items")
@@ -71,6 +75,14 @@ export default function MyAccount({currentUser, setCurrentUser}) {
     setFormData(newForm)
   }
 
+  function deleteAccount() {
+    fetch("/me",{
+      method: "DELETE"
+    })
+    
+    redirect()
+  }
+
   if (!currentUser) return <h2>Loading...</h2>
 
   return (
@@ -80,6 +92,7 @@ export default function MyAccount({currentUser, setCurrentUser}) {
       <p><strong>Favorite Bowl: </strong>{currentUser.fav_bowl}</p>
       <p><strong>Diet: </strong>{currentUser.diet}</p>
 
+      <button onClick={deleteAccount}>Delete Account</button>
       {(!showAccountEdit) ? (
         <button onClick={switchAccountEdit}>Edit Account</button>
       ) : (
