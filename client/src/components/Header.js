@@ -1,5 +1,5 @@
 import {NavLink} from "react-router-dom"
-// import HeaderLogo from "../images/wordmark-clearframe-green.png"
+import HeaderLogo from "../images/headerlogo.png"
 
 
 export default function Header({currentUser, setCurrentUser}) {
@@ -15,7 +15,7 @@ export default function Header({currentUser, setCurrentUser}) {
 
   return (
     <div className="App-header">
-      {/* <HeaderLogo/> */}
+      <img src={HeaderLogo} alt="Backyard Bowls Logo" />
       <h1>Backyard Bowls</h1>
       <nav>
         <NavLink to="/" className="nav-link">
