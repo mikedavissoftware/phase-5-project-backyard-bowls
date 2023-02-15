@@ -40,7 +40,7 @@ export default function App() {
           <AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser} history={history} />
         </Route>
         <Route path="/login">
-          <LoginPage setCurrentUser={setCurrentUser} history={history} />
+          <LoginPage currentUser={currentUser} setCurrentUser={setCurrentUser} history={history} />
         </Route>
         <Route path="/">
           <Home />

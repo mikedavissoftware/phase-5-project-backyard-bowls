@@ -1,13 +1,7 @@
 import {useState, useEffect} from "react"
 
 
-export default function SignupForm({setCurrentUser, redirect, items}) {
-  // const [username, setUsername] = useState("")
-  // const [password, setPassword] = useState("")
-  // const [passwordConfirmation, setPasswordConfirmation] = useState("")
-  // const [image, setImage] = useState("")
-  // const [favBowl, setFavBowl] = useState("")
-  // const [diet, setDiet] = useState("")
+export default function SignupForm({items, currentUser, setCurrentUser, redirect}) {
 
   const [errors, setErrors] = useState([]);
 
@@ -47,14 +41,22 @@ export default function SignupForm({setCurrentUser, redirect, items}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setErrors([]);
+    
+    const formSubmit = {
+      username: formData.username,
+      password: formData.password,
+      password_confirmation: formData.passwordConfirmation,
+      image: formData.image,
+      fav_bowl: formData.favBowl,
+      diet: formData.diet
+    }
 
     fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formSubmit),
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => setCurrentUser(user));
@@ -62,9 +64,12 @@ export default function SignupForm({setCurrentUser, redirect, items}) {
         r.json().then((err) => setErrors(err.errors));
       }
     });
+    console.log(currentUser)
 
     redirect()
   }
+
+  if (!items) return <h2>Loading...</h2>
 
   return (
     <div>

@@ -2,8 +2,7 @@ import {useState} from "react"
 
 import Comment from "./Comment"
 
-export default function CommentForm({itemId, comments, setComments, currentUser}) {
-  console.log(currentUser)
+export default function CommentForm({itemId, currentUser, comments, setComments}) {
 
   const [showCommentForm, setShowCommentForm] = useState(false)
   function toggleCommentForm() {
@@ -35,7 +34,7 @@ export default function CommentForm({itemId, comments, setComments, currentUser}
   }
 
   function submitComment(e) {
-    e.preventDefault()
+    // e.preventDefault()
 
     console.log("submit button pushed")
 
@@ -46,10 +45,11 @@ export default function CommentForm({itemId, comments, setComments, currentUser}
       },
       body: JSON.stringify(formData)
     })
-    // .then(r => r.json())
-    // .then(newComment => {
-    //   setComments(newComment, ...comments)
-    // })
+    .then(r => r.json())
+    .then(newComment => {
+      console.log(newComment)
+      console.log(comments)
+    })
 
     setFormData(newForm)
     setShowCommentForm(false)
@@ -58,7 +58,7 @@ export default function CommentForm({itemId, comments, setComments, currentUser}
   return (
     <div>
       {(!showCommentForm) ? (
-        <button onClick={() => toggleCommentForm()}>Show Comment Form</button>
+        <button onClick={() => toggleCommentForm()}>Leave a Comment</button>
       ) : (
         <>
         <button onClick={() => toggleCommentForm()}>Hide Comment Form</button>

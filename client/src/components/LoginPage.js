@@ -4,21 +4,23 @@ import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
 
-export default function LoginPage({setCurrentUser, history}) {
-  const [showLogin, setShowLogin] = useState(true);
-  const [items, setItems] = useState([])
+export default function LoginPage({currentUser, setCurrentUser, history}) {
 
-  const redirect = () => {
-    history.push('/menu');
-  }
+  const [showLogin, setShowLogin] = useState(true)
+  const [items, setItems] = useState([])
 
   useEffect(() => {
     fetch("/items")
     .then(r => r.json())
     .then(itemsData => {
       setItems(itemsData)
+      console.log("fetched")
     })
-  }, [])
+  }, [showLogin])
+
+  const redirect = () => {
+    history.push('/menu');
+  }
 
   return (
     <div>
@@ -35,7 +37,7 @@ export default function LoginPage({setCurrentUser, history}) {
         </>
       ) : (
         <>
-          <SignupForm setCurrentUser={setCurrentUser} redirect={redirect} items={items} />
+          <SignupForm items={items} currentUser={currentUser} setCurrentUser={setCurrentUser} redirect={redirect} />
           <p>
             Already have an account?
             <button onClick={() => setShowLogin(true)}>

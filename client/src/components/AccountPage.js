@@ -4,8 +4,8 @@ import {useState, useEffect} from "react"
 
 export default function AccountPage({currentUser, setCurrentUser, history}) {
 
-  const [bowlNames, setBowlNames] = useState([])
-  const [dietNames, setDietNames] = useState([])
+  const [bowlOptions, setBowlOptions] = useState([])
+  const [dietOptions, setDietOptions] = useState([])
 
   const redirect = () => {
     history.push('/');
@@ -15,15 +15,32 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
     fetch("/items")
     .then(r => r.json())
     .then(items => {
-      setBowlNames(items.filter((item) => {
+      const otherNameValues = items.filter((item) => {
         return item.category === "Bowl"
-      }))
-      const diets = items.filter((item) => {
+      }).map(bowl => {
+        return bowl.name
+      }).filter(bowlName => {
+        return bowlName !== currentUser.fav_bowl
+      })
+      const userFavOption = <option value={currentUser.fav_bowl} selected>{currentUser.fav_bowl}</option>
+      const otherBowlOptions = otherNameValues.map(nameValue => {
+        return <option value={nameValue}>{nameValue}</option>
+      })
+      setBowlOptions([userFavOption, otherBowlOptions])
+
+      const dietsObj = items.filter((item) => {
         return item.category === "Diets"
       })
-      setDietNames(JSON.parse(diets[0].name))
+      const otherDietsArray = JSON.parse(dietsObj[0].name).filter((diet) => {
+        return diet !== currentUser.diet
+      })
+      const userDietOption = <option value={currentUser.diet} selected>{currentUser.diet}</option>
+      const otherDietOptions = otherDietsArray.map((diet) => {
+        return <option value={diet}>{diet}</option>
+      })
+      setDietOptions([userDietOption, otherDietOptions])
     })
-  }, [])
+  }, [currentUser])
 
   const [showAccountEdit, setShowAccountEdit] = useState(false)
   function switchAccountEdit() {
@@ -38,7 +55,14 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
     favBowl:'',
     diet:''
   }
-  const [formData, setFormData] = useState(newForm)
+  const [formData, setFormData] = useState({
+    username: currentUser.username,
+    password: "",
+    passwordConfirmation: "",
+    image: currentUser.image,
+    favBowl: currentUser.fav_bowl,
+    diet: currentUser.diet
+  })
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -70,16 +94,26 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
     .then((editedAccount) => {
       console.log(editedAccount)
       setCurrentUser(editedAccount)
+      setFormData({
+        username: editedAccount.username,
+        password: "",
+        passwordConfirmation: "",
+        image: editedAccount.image,
+        favBowl: editedAccount.fav_bowl,
+        diet: editedAccount.diet
+      })
+      console.log(currentUser)
+      console.log(formData)
     })
-    
-    setFormData(newForm)
+
+    setShowAccountEdit(false)
   }
 
   function deleteAccount() {
     fetch("/me",{
       method: "DELETE"
     })
-    
+    setCurrentUser(null)
     redirect()
   }
 
@@ -87,8 +121,8 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
 
   return (
     <div>
-      <h3>{currentUser.username}</h3>
-      <img src={currentUser.image}></img>
+      <img src={currentUser.image} style={{marginTop: "20px", width: "45%"}}></img>
+      <p><strong>Username: </strong>{currentUser.username}</p>
       <p><strong>Favorite Bowl: </strong>{currentUser.fav_bowl}</p>
       <p><strong>Diet: </strong>{currentUser.diet}</p>
 
@@ -121,7 +155,7 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
           />
 
           <br></br>
-          <label><strong>Confirm Password: </strong></label>
+          <label><strong>Confirm New Password: </strong></label>
           <input
             type="password"
             name="passwordConfirmation"
@@ -135,36 +169,22 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
           <input
             type="text"
             name="image"
-            placeholder={`${currentUser.image}`}
+            placeholder={`Change from ${currentUser.image}`}
             value={formData.image}
             onChange={handleChange}
           />
 
           <br></br>
           <label><strong>Change Your Favorite Bowl: </strong></label>
-          <input
-            type="text"
-            name="favBowl"
-            placeholder={`${currentUser.fav_bowl}`}
-            value={formData.favBowl}
-            onChange={handleChange}
-          />
-
-          {/* <br></br>
-          <label><strong>Change Your Favorite Bowl: </strong></label>
-          <select>
-
-          </select> */}
+          <select name="favBowl" onChange={handleChange}>
+            {bowlOptions}
+          </select>
 
           <br></br>
           <label><strong>Change Your Diet: </strong></label>
-          <input
-            type="text"
-            name="diet"
-            placeholder={`${currentUser.diet}`}
-            value={formData.diet}
-            onChange={handleChange}
-          />
+          <select name="diet" onChange={handleChange}>
+            {dietOptions}
+          </select>
 
           <br></br>
           <button type="submit">Submit Changes</button>
