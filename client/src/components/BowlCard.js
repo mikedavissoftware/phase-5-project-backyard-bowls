@@ -1,8 +1,15 @@
 import {useState} from "react"
 import {Link} from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 
 export default function BowlCard({bowl, currentUser}) {
+
+  const history = useHistory()
+  const redirect = () => {
+    history.push("/login")
+  }
+
   const [likes, setLikes] = useState(bowl.likes)
 
   const isLikedByCurrentUser = (currentUser) ? (
@@ -21,19 +28,23 @@ export default function BowlCard({bowl, currentUser}) {
   })
 
   function createLike() {
-    fetch(`/likes`, {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify({user_id: currentUser.id, item_id: bowl.id})
-    })
-    .then(r => r.json())
-    .then(newLike => {
-      setLikes([...likes, newLike])
-      setItemLikes([...itemLikes, newLike])
-    })
-    setShowLikeButton(!showLikeButton)
+    (!currentUser) ? (
+      redirect()
+    ) : (
+      fetch(`/likes`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({user_id: currentUser.id, item_id: bowl.id})
+      })
+      .then(r => r.json())
+      .then(newLike => {
+        setLikes([...likes, newLike])
+        setItemLikes([...itemLikes, newLike])
+        setShowLikeButton(!showLikeButton)
+      })
+    )
   }
 
   function deleteLike() {

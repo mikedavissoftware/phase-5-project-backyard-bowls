@@ -69,12 +69,21 @@ export default function SignupForm({items, currentUser, setCurrentUser, redirect
     redirect()
   }
 
+  const showErrors = errors.map((error) => {
+    return <h4 style={{color: "#dd0000"}}>{error}</h4>
+  })
+
   if (!items) return <h2>Loading...</h2>
 
   return (
     <div>
+      {(errors.length > 0) ? (
+        showErrors
+      ) : (
+        <h3>Create Your Account</h3>
+      )}
       <form onSubmit={handleSubmit}>
-        <label><strong>Username:</strong></label>
+        <label><strong>Username: </strong></label>
         <input 
           type="text" 
           name="username" 
@@ -84,7 +93,7 @@ export default function SignupForm({items, currentUser, setCurrentUser, redirect
         />
 
         <br></br>
-        <label><strong>Password:</strong></label>
+        <label><strong>Password: </strong></label>
         <input 
           type="password" 
           name="password" 
@@ -94,7 +103,7 @@ export default function SignupForm({items, currentUser, setCurrentUser, redirect
         />
 
         <br></br>
-        <label><strong>Confirm Password:</strong></label>
+        <label><strong>Confirm Password: </strong></label>
         <input 
           type="password" 
           name="passwordConfirmation" 
@@ -104,7 +113,7 @@ export default function SignupForm({items, currentUser, setCurrentUser, redirect
         />
 
         <br></br>
-        <label><strong>Image:</strong></label>
+        <label><strong>Image: </strong></label>
         <input 
           type="text" 
           name="image" 

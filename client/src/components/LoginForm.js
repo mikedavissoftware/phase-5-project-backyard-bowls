@@ -31,7 +31,11 @@ export default function LoginForm({setCurrentUser, redirect}) {
 
   return (
     <div>
-      {showErrors}
+      {(errors.length > 0) ? (
+        showErrors
+      ) : (
+        <h3>Log In Below</h3>
+      )}
       <form  onSubmit={handleSubmit}>
         <label><strong>Username: </strong></label>
         <input
@@ -47,7 +51,7 @@ export default function LoginForm({setCurrentUser, redirect}) {
         <input
           type="password"
           id="password"
-          placeholder="Enter Password..."
+          placeholder="Enter password..."
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

@@ -6,6 +6,7 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
 
   const [bowlOptions, setBowlOptions] = useState([])
   const [dietOptions, setDietOptions] = useState([])
+  const [errors, setErrors] = useState([]);
 
   const redirect = () => {
     history.push('/');
@@ -72,7 +73,7 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
 
   function submitEdits(e) {
     e.preventDefault();
-    // setErrors([]);
+    setErrors([]);
 
     const editAccount = {
       username: formData.username,

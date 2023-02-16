@@ -1,10 +1,7 @@
 import {useState} from "react"
 
-import Comment from "./Comment"
+export default function CommentForm({itemId, currentUser, showCommentForm, setShowCommentForm, fetchCounter, setFetchCounter}) {
 
-export default function CommentForm({itemId, currentUser, comments, setComments}) {
-
-  const [showCommentForm, setShowCommentForm] = useState(false)
   function toggleCommentForm() {
     setShowCommentForm(!showCommentForm)
   }
@@ -12,9 +9,9 @@ export default function CommentForm({itemId, currentUser, comments, setComments}
   function numberOptions(max) {        
     const numbersArray = []
     for (let i=0; i<max; i++) {
-        numbersArray.push(
-            <option value={i}>{i}</option>
-        )
+      numbersArray.push(
+        <option value={i}>{i}</option>
+      )
     }
     return numbersArray
   }
@@ -22,19 +19,19 @@ export default function CommentForm({itemId, currentUser, comments, setComments}
   const newForm = {
     rating: 10,
     content: "",
-    user_id: currentUser.id,
+    user_id: null,
     item_id: itemId
   }
   const [formData, setFormData] = useState(newForm)
 
   function handleChange(event) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setFormData({...formData, [event.target.name]: event.target.value})
-    console.log(formData)
+    // console.log(formData)
   }
 
   function submitComment(e) {
-    // e.preventDefault()
+    e.preventDefault()
 
     console.log("submit button pushed")
 
@@ -43,16 +40,12 @@ export default function CommentForm({itemId, currentUser, comments, setComments}
       headers: {
           "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
-    })
-    .then(r => r.json())
-    .then(newComment => {
-      console.log(newComment)
-      console.log(comments)
+      body: JSON.stringify({...formData, user_id: currentUser.id})
     })
 
     setFormData(newForm)
     setShowCommentForm(false)
+    setFetchCounter(fetchCounter + 1)
   }
 
   return (

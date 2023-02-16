@@ -8,7 +8,7 @@ export default function SidesCollection({sidesDrinks}) {
   const sidesComponents = sidesDrinks.map(item => {
     return (
       <div className="item">
-        <h2><Link to={`/items/${item.id}`}>{item.name}</Link></h2>
+        <h2>{item.name}</h2>
         <h3>${item.price}</h3>
         <img src={item.image} style={{height: "150px"}}></img>
       </div>

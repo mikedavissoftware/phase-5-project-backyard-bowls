@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import './App.css';
 
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Menu from './components/Menu'
 import LoginPage from './components/LoginPage'
 import Home from './components/Home'
@@ -12,6 +13,7 @@ import BowlPage from "./components/BowlPage"
 
 export default function App() {
   const history = useHistory()
+  const [errors, setErrors] = useState([]);
 
   const [currentUser, setCurrentUser] = useState(null)
   useEffect(() => {
@@ -21,6 +23,8 @@ export default function App() {
         r.json().then((currentUser) => {
           setCurrentUser(currentUser)
         });
+      } else {
+        r.json().then((err) => setErrors(err.errors));
       }
     });
   }, []);
@@ -47,7 +51,7 @@ export default function App() {
         </Route>
       </Switch>
 
-      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <Footer currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </div>
   );
 }
