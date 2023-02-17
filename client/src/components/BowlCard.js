@@ -77,7 +77,6 @@ export default function BowlCard({bowl, currentUser}) {
 
   return (
     <div className="item">
-      <p><strong>Dressing: </strong>{bowl.dressing}</p>
       <div className="card w-96 bg-base-100 shadow-xl">
         <figure><img src={bowl.image} alt="Shoes" /></figure>
         <div className="card-body">

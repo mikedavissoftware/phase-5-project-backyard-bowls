@@ -29,6 +29,8 @@ export default function App() {
     });
   }, []);
 
+  console.log(currentUser)
+
   return (
     <div className="bg-slate-300">
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
@@ -51,7 +53,7 @@ export default function App() {
         </Route>
       </Switch>
 
-      <Footer currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </div>
   );
 }
