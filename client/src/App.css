@@ -15,13 +15,20 @@
 
 .App-header {
   background-color: #282c34;
+  background-image: url("./images/backdrop.png");
+  background-position: center;
+  background-size: cover;
   /* min-height: 300px; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+}
+
+.App-sub-header {
+  background-color: rgb(255, 255, 255, 0.8);
+  background-color: rgb(0, 0, 0, 0.4);
   padding: 25px;
 }
 
@@ -45,18 +52,18 @@
   margin: auto;
   margin-top: 5px;
   margin-bottom: 5px;
-  background-color: lightcyan;
+  background-color: #6bbef6;
   box-shadow: 5px 5px 3px rgb(0,0,0,.3);
   border-style: solid;
-  border-color: rgb(249, 255, 171);
+  border-color: #80b217;
   border-width: 5px;
   border-radius: 20px;
 }
 .item:hover {
-  background-color: rgb(253, 255, 224);
+  background-color: #a3daff;
   box-shadow: 10px 10px 5px rgb(0,0,0,.3);
   border-style: solid;
-  border-color: rgb(190, 255, 255);
+  border-color: #afed29;
   border-width: 5px;
   border-radius: 20px;
 }
@@ -71,16 +78,42 @@ a {
   cursor: pointer;
 }
 a:link {
-  color: green;
+  color: #6bbef6;
 }
 a:visited {
-  color: orange;
+  color: #1c4058;
 }
 a:hover {
-  color: lightgreen;
+  color: #a83535;
 }
 a:active {
   color: rgb(198, 255, 112);
+}
+
+nav > a {
+  cursor: pointer;
+}
+nav > a:link {
+  color: #80b217;
+}
+nav > a:visited {
+  color: #6bbef6;
+}
+nav > a:hover {
+  color: #a83535;
+}
+nav > a:active {
+  color: rgb(198, 255, 112);
+}
+
+nav {
+  padding: 10px;
+  background-color: #000000;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #80b217;
+  color: white;
 }
 
 img {
@@ -108,7 +141,7 @@ form {
   display: flex;
   flex-wrap: wrap;
   text-align: left;
-  background-color: lightcyan;
+  background-color: #afed29;
   margin: 15px;
   border-radius: 20px;
   animation: fadeIn 1s;
@@ -121,8 +154,8 @@ form {
   margin: 10px;
 }
 .comment-picture > img {
-  height: 150px;
-  border-radius: 10px;
+  height: 160px;
+  border-radius: 15px;
 }
 .comment-content {
   margin-left: 10px;
