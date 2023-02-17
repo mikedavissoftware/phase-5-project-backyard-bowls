@@ -1,7 +1,7 @@
 import React from "react"
 import { Route, Switch, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react"
-import './App.css';
+// import './App.css';
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -30,7 +30,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="bg-slate-300">
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
       
       <Switch>

@@ -7,10 +7,12 @@ export default function SidesCollection({sidesDrinks}) {
 
   const sidesComponents = sidesDrinks.map(item => {
     return (
-      <div className="item">
-        <h2>{item.name}</h2>
-        <h3>${item.price}</h3>
-        <img src={item.image} style={{height: "150px"}}></img>
+      <div className="card w-50 bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title">{item.name}</h2>
+          <p>{item.price}</p>
+        </div>
+        <figure><img src={item.image} alt={item.name} /></figure>
       </div>
     )
   })

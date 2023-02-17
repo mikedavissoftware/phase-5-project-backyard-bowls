@@ -6,8 +6,11 @@ import { useHistory } from "react-router-dom"
 export default function BowlCard({bowl, currentUser}) {
 
   const history = useHistory()
-  const redirect = () => {
+  const redirectLogin = () => {
     history.push("/login")
+  }
+  const redirectBowlPage = () => {
+    history.push(`/items/${bowl.id}`)
   }
 
   const [likes, setLikes] = useState(bowl.likes)
@@ -21,15 +24,24 @@ export default function BowlCard({bowl, currentUser}) {
 
   const [itemLikes, setItemLikes] = useState(bowl.likes)
   
-  const vegList = bowl.veggies.slice(1, bowl.veggies.length-1)
-  const vegArray = vegList.split(", ")
+  const vegArray = JSON.parse(bowl.veggies)  
+  let vegI = 0
   const vegComponents = vegArray.map(veggie => {
-    return <li>{veggie.slice(1, veggie.length-1)}</li>
+    vegI++
+    return (
+      (vegI < (vegArray.length)) ? (
+        <span>{veggie}, </span>
+      ) : (
+        <span>and {veggie}.</span>
+      )
+    )
   })
+
+  console.log(vegComponents)
 
   function createLike() {
     (!currentUser) ? (
-      redirect()
+      redirectLogin()
     ) : (
       fetch(`/likes`, {
         method: "POST",
@@ -65,29 +77,27 @@ export default function BowlCard({bowl, currentUser}) {
 
   return (
     <div className="item">
-      <h2><Link to={`/items/${bowl.id}`}>{bowl.name}</Link></h2>
-      <h3>$8 small / $13 large</h3>
-      <h3>{itemLikes.length} People Liked this Bowl</h3>
-      <img src={bowl.image} style={{height: "150px"}}></img>
-      <br></br>
-      {
-        showLikeButton ? 
-        (
-          <button onClick={() => {deleteLike()}}>🧡 Unlike this Bowl</button>
-        ) : 
-        (
-          <button onClick={() => {createLike()}}>♡ I like this Bowl</button>
-        )
-      }
-      <hr width="45%"></hr>
-      <h3>Ingredients:</h3>
-      <p><strong>Base: </strong>{bowl.base}</p>
-      <p><strong>Protein: </strong>{bowl.protein}</p>
-      <p><strong>Veggies: </strong></p>
-      <ul>
-        {vegComponents}
-      </ul>
       <p><strong>Dressing: </strong>{bowl.dressing}</p>
+      <div className="card w-96 bg-base-100 shadow-xl">
+        <figure><img src={bowl.image} alt="Shoes" /></figure>
+        <div className="card-body">
+          <h2 className="card-title">{bowl.name}</h2>
+          <h4 className=""></h4>
+          <p>Our <strong>{bowl.name}</strong> has our classic <strong>{bowl.base}</strong> base with <strong>{bowl.protein}</strong> as its protein, and rounding out the ingredients with <strong>{vegComponents}</strong>. Last, but not least, this delicious bowl is finished with a dressing of <strong>{bowl.dressing}</strong>. Bon appétit!</p>
+          <div className="card-actions justify-end grid grid-cols-2">
+            {
+              showLikeButton ? 
+              (
+                <button className="btn btn-primary" onClick={() => {deleteLike()}}>🧡 Liked</button>
+              ) : 
+              (
+                <button className="btn btn-asdf border-2 border-primary" onClick={() => {createLike()}}>♡ Click to Like</button>
+              )
+            }
+            <button className="btn btn-primary" onClick={redirectBowlPage}>More Details</button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
