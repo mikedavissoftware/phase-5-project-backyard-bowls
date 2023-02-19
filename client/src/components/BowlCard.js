@@ -77,20 +77,20 @@ export default function BowlCard({bowl, currentUser}) {
 
   return (
     <div className="item">
-      <div className="card w-96 bg-base-100 shadow-xl">
+      <div className="card lg:card-side bg-base-100 shadow-xl">
         <figure><img src={bowl.image} alt="Shoes" /></figure>
         <div className="card-body">
           <h2 className="card-title">{bowl.name}</h2>
           <h4 className=""></h4>
           <p>Our <strong>{bowl.name}</strong> has our classic <strong>{bowl.base}</strong> base with <strong>{bowl.protein}</strong> as its protein, and rounding out the ingredients with <strong>{vegComponents}</strong>. Last, but not least, this delicious bowl is finished with a dressing of <strong>{bowl.dressing}</strong>. Bon appétit!</p>
-          <div className="card-actions justify-end grid grid-cols-2">
+          <div className="card-actions justify-end">
             {
               showLikeButton ? 
               (
                 <button className="btn btn-primary" onClick={() => {deleteLike()}}>🧡 Liked</button>
               ) : 
               (
-                <button className="btn btn-asdf border-2 border-primary" onClick={() => {createLike()}}>♡ Click to Like</button>
+                <button className="btn btn-primary border-2 border-primary" onClick={() => {createLike()}}>♡ Click to Like</button>
               )
             }
             <button className="btn btn-primary" onClick={redirectBowlPage}>More Details</button>
