@@ -23,7 +23,10 @@ export default function Comment({comment, currentUser, setComments}) {
     })
     fetch("/comments")
     .then(r => r.json())
-    .then(commentsData => setComments(commentsData))
+    .then(commentsData => {
+      setComments(commentsData)
+      console.log(commentsData)
+    })
   }
 
   if (!comment) return <h3>Loading...</h3>
@@ -45,7 +48,7 @@ export default function Comment({comment, currentUser, setComments}) {
               ) : (
                 <button onClick={() => setShowEditForm(false)}>Hide Edit Form</button>
               )}
-              <button onClick={() => deleteComment}>Delete My Comment</button>
+              <button onClick={deleteComment}>Delete My Comment</button>
             </span>
           ) : (
             <></>

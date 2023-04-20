@@ -16,7 +16,7 @@ export default function BowlDetail({bowl, currentUser}) {
   
   const vegList = bowl.veggies.slice(1, bowl.veggies.length-1)
   const vegArray = vegList.split(", ")
-  const vegComponents = vegArray.map(veggie => {
+  const vegComponents = vegArray.map((veggie) => {
     return <li>{veggie.slice(1, veggie.length-1)}</li>
   })
 

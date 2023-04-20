@@ -26,7 +26,7 @@ export default function BowlPage({currentUser}) {
     {/* <div className="items-container">
       <BowlCard key={bowl.id} bowl={bowl} currentUser={currentUser} />
     </div> */}
-    <BowlDetail key={bowl.id} bowl={bowl} currentUser={currentUser} />
+    <BowlDetail bowl={bowl} currentUser={currentUser} />
     <CommentSection comments={comments} setComments={setComments} currentUser={currentUser} />
     </>
   )

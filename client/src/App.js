@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Switch, useHistory } from "react-router-dom";
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import './App.css';
 
 import Header from './components/Header'
@@ -10,9 +10,12 @@ import Home from './components/Home'
 import AccountPage from "./components/AccountPage"
 import BowlPage from "./components/BowlPage"
 
-export default function App() {
-  const history = useHistory()
+export const GlobalContext = createContext()
 
+export default function App() {
+
+  const history = useHistory()
+  
   const [currentUser, setCurrentUser] = useState(null)
   useEffect(() => {
     // auto-login
@@ -26,7 +29,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
+    <GlobalContext.Provider value={{currentUser, setCurrentUser, history}} className="App">
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
       
       <Switch>
@@ -48,6 +51,6 @@ export default function App() {
       </Switch>
 
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
-    </div>
+    </GlobalContext.Provider>
   );
 }

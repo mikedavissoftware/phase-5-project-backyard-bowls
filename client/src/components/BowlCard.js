@@ -53,7 +53,7 @@ export default function BowlCard({bowl, currentUser}) {
   }
 
   return (
-    <div className="item">
+    <div className="item" style={{width: "fit-content", padding: "15px"}}>
       <h2><Link to={`/items/${bowl.id}`}>{bowl.name}</Link></h2>
       <h3>$8 small / $13 large</h3>
       <h3>{itemLikes.length} People Liked this Bowl</h3>

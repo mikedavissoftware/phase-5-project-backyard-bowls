@@ -100,7 +100,7 @@ puts "🌱 Seeding items..."
   Item.create(
     name: "Kombucha",
     category: "Drink",
-    image: "https://cdn.shopify.com/s/files/1/0281/6383/3891/products/Buchi-Kombucha-Water---Bottle-opt_1200x1200.png",
+    image: "https://cdn.shopify.com/s/files/1/0281/6383/3891/products/Kombucha-Water---New-Bottle_400x.png?v=1675707059",
     base: "NA",
     protein: "NA",
     veggies: "NA",

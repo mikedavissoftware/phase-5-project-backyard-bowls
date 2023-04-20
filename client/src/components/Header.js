@@ -17,7 +17,7 @@ export default function Header({currentUser, setCurrentUser}) {
     // <div className="bg-banner bg-center bg-cover bg-white-50">
     <div className="App-header">
 
-      <img src={HeaderLogo} alt="Backyard Bowls Logo" className="drop-shadow-dark stroke-black p-3 mx-auto" style={{width: "95%", marginBottom: "20px"}}/>
+      <img src={HeaderLogo} alt="Backyard Bowls Logo" className="drop-shadow-dark stroke-black p-3 mx-auto" style={{width: "95%", marginBottom: "20px", maxWidth: "600px"}}/>
       <nav>
         <NavLink to="/" className="nav-link">
           Home

@@ -30,10 +30,10 @@ export default function CommentSection({comments, setComments, currentUser}) {
   )
 
   const commentComponentsUser = commentsArray.map((comment) => {
-    return <Comment id={comment.id} comment={comment} currentUser={currentUser} setComments={setComments} />
+    return <Comment key={comment.id} comment={comment} currentUser={currentUser} setComments={setComments} />
   })
   const commentComponentsNoUser = commentsArray.map((comment) => {
-    return <Comment id={comment.id} comment={comment} setComments={setComments} />
+    return <Comment key={comment.id} comment={comment} setComments={setComments} />
   })
 
   if (!currentUser) return (
