@@ -43,5 +43,20 @@ module BackyardBowls
 
     # Use SameSite=Strict for all cookies to help protect against CSRF
     config.action_dispatch.cookies_same_site_protection = :strict
+
+    if Rails.env.development?
+      ENV['FRONTEND_URL'] = 'http://localhost:4000'
+      ENV['BACKEND_URL'] = 'http://localhost:3000'
+    end
+
+    if Rails.env.test?
+      ENV['FRONTEND_URL'] = 'other'
+      ENV['BACKEND_URL'] = 'other'
+    end
+    
+    if Rails.env.production?
+      ENV['FRONTEND_URL'] = 'other'
+      ENV['BACKEND_URL'] = 'other'
+    end
   end
 end

@@ -1,8 +1,14 @@
-import {NavLink} from "react-router-dom"
+import { useContext } from "react"
+import { NavLink } from "react-router-dom"
 import HeaderLogo from "../images/wordmark-green.png"
 
+import { GlobalContext } from "../App"
 
-export default function Header({currentUser, setCurrentUser}) {
+
+export default function Header() {
+
+  const { currentUser, setCurrentUser } = useContext(GlobalContext)
+
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
@@ -10,8 +16,6 @@ export default function Header({currentUser, setCurrentUser}) {
       }
     });
   }
-
-  // console.log(currentUser)
 
   return (
     // <div className="bg-banner bg-center bg-cover bg-white-50">

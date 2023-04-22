@@ -1,14 +1,14 @@
-import {useEffect, useState} from "react"
-import {useParams} from "react-router-dom"
+import { useEffect, useState, useContext } from "react"
+import { useParams } from "react-router-dom"
 
-import BowlCard from "./BowlCard"
 import CommentSection from "./CommentSection"
 import BowlDetail from "./BowlDetail"
 
-export default function BowlPage({currentUser}) {
+export default function BowlPage() {
+
   const [comments, setComments] = useState([])
 
-  const {id} = useParams()
+  const { id } = useParams()
   const [bowl, setBowl] = useState(null)
   useEffect(() => {
     fetch(`/items/${id}`)
@@ -26,8 +26,8 @@ export default function BowlPage({currentUser}) {
     {/* <div className="items-container">
       <BowlCard key={bowl.id} bowl={bowl} currentUser={currentUser} />
     </div> */}
-    <BowlDetail bowl={bowl} currentUser={currentUser} />
-    <CommentSection comments={comments} setComments={setComments} currentUser={currentUser} />
+    <BowlDetail bowl={bowl} />
+    <CommentSection comments={comments} setComments={setComments} />
     </>
   )
 }

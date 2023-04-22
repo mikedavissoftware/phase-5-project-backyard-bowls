@@ -1,10 +1,14 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect , useContext } from "react"
 
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
+import { GlobalContext } from "../App"
 
-export default function LoginPage({currentUser, setCurrentUser, history}) {
+
+export default function LoginPage() {
+
+  const { currentUser, setCurrentUser, history } = useContext(GlobalContext)
 
   const [showLogin, setShowLogin] = useState(true)
   const [items, setItems] = useState([])

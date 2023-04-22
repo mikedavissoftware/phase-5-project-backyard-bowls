@@ -1,8 +1,11 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect , useContext } from "react"
+
+import { GlobalContext } from "../App"
 
 
+export default function AccountPage() {
 
-export default function AccountPage({currentUser, setCurrentUser, history}) {
+  const { currentUser, setCurrentUser, history } = useContext(GlobalContext)
 
   const [bowlOptions, setBowlOptions] = useState([])
   const [dietOptions, setDietOptions] = useState([])
@@ -128,7 +131,7 @@ export default function AccountPage({currentUser, setCurrentUser, history}) {
 
       <button onClick={deleteAccount}>Delete Account</button>
       {(!showAccountEdit) ? (
-        <button onClick={switchAccountEdit}>Edit Account</button>
+        <button onClick={switchAccountEdit} style={{marginBottom: "30px"}}>Edit Account</button>
       ) : (
         <>
         <button onClick={switchAccountEdit}>Hide Edit Account</button>

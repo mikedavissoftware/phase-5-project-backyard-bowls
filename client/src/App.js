@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Switch, useHistory } from "react-router-dom";
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, createContext } from "react"
 import './App.css';
 
 import Header from './components/Header'
@@ -9,6 +9,7 @@ import LoginPage from './components/LoginPage'
 import Home from './components/Home'
 import AccountPage from "./components/AccountPage"
 import BowlPage from "./components/BowlPage"
+import Footer from "./components/Footer"
 
 export const GlobalContext = createContext()
 
@@ -28,19 +29,22 @@ export default function App() {
     });
   }, []);
 
+  const api = "http://localhost:3000"
+
   return (
-    <GlobalContext.Provider value={{currentUser, setCurrentUser, history}} className="App">
-      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
+    <div className="App">
+    <GlobalContext.Provider value={{ currentUser, setCurrentUser, history, api }}>
+      <Header />
       
       <Switch>
         <Route path="/items/:id">
-          <BowlPage currentUser={currentUser} />
+          <BowlPage />
         </Route>
         <Route path="/menu">
-          <Menu currentUser={currentUser} />
+          <Menu />
         </Route>
         <Route path="/me">
-          <AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser} history={history} />
+          <AccountPage />
         </Route>
         <Route path="/login">
           <LoginPage currentUser={currentUser} setCurrentUser={setCurrentUser} history={history} />
@@ -50,7 +54,8 @@ export default function App() {
         </Route>
       </Switch>
 
-      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <Footer />
     </GlobalContext.Provider>
+    </div>
   );
 }

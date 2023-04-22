@@ -1,8 +1,10 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react"
+
 import BowlCard from "./BowlCard"
 
 
-export default function BowlCollection({bowls, currentUser}) {
+export default function BowlCollection({ bowls }) {
+
   const [allLikes, setAllLikes] = useState([])
   useEffect(() => {
     fetch("/likes")
@@ -14,7 +16,7 @@ export default function BowlCollection({bowls, currentUser}) {
 
   const bowlCards = bowls.map(bowl => {
     // console.log(bowl.id)
-    return <BowlCard key={bowl.id} bowl={bowl} allLikes={allLikes} setAllLikes={setAllLikes} currentUser={currentUser} />
+    return <BowlCard key={bowl.id} bowl={bowl} allLikes={allLikes} setAllLikes={setAllLikes} />
   })
 
   return (

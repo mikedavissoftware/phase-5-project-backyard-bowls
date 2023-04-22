@@ -1,10 +1,12 @@
-import {useEffect, useState} from "react"
+import { useState, useEffect , useContext } from "react"
 
 import BowlCollection from "./BowlCollection"
 import SidesCollection from "./SidesCollection"
 
+import { GlobalContext } from "../App"
 
-export default function Menu({currentUser}) {
+
+export default function Menu() {
 
   const [allLikes, setAllLikes] = useState([])
   useEffect(() => {
@@ -41,7 +43,7 @@ export default function Menu({currentUser}) {
   return (
     <div className="menu-container">
       <h1>🥗 BOWLS 🥗</h1>
-      <BowlCollection bowls={bowls} allLikes={allLikes} setAllLikes={setAllLikes} currentUser={currentUser} />
+      <BowlCollection bowls={bowls} allLikes={allLikes} setAllLikes={setAllLikes} />
       <hr width="50%"></hr>
       <h1>🍠 SIDES & DRINKS 🍹</h1>
       <SidesCollection sidesDrinks={sidesDrinks} />

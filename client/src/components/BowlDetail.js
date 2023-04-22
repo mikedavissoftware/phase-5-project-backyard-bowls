@@ -1,8 +1,13 @@
-import {useState} from "react"
-import {Link} from "react-router-dom"
+import { useState, useContext } from "react"
+import { Link } from "react-router-dom"
+
+import { GlobalContext } from "../App"
 
 
-export default function BowlDetail({bowl, currentUser}) {
+export default function BowlDetail({ bowl }) {
+
+  const { currentUser } = useContext(GlobalContext)
+
   const [likes, setLikes] = useState(bowl.likes)
 
   const isLikedByCurrentUser = (currentUser) ? (

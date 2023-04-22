@@ -1,11 +1,15 @@
-import {useState, useEffect} from "react"
+import { useContext } from "react"
 
 import Comment from "./Comment"
 import CommentForm from "./CommentForm"
 import CommentEditForm from "./CommentEditForm"
 
+import { GlobalContext } from "../App"
 
-export default function CommentSection({comments, setComments, currentUser}) {
+
+export default function CommentSection({ comments, setComments }) {
+
+  const { currentUser } = useContext(GlobalContext)
 
   const currentUserComments = (currentUser) ? (
     comments.filter((comment) => {
