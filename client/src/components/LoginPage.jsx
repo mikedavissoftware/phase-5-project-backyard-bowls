@@ -3,18 +3,18 @@ import { useState, useEffect , useContext, createContext } from "react"
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
-import { GlobalContext } from "../AppVite"
+import { GlobalContext } from "../App"
 
 
 export default function LoginPage() {
 
-  const { currentUser, setCurrentUser, history } = useContext(GlobalContext)
+  const { currentUser, setCurrentUser, history, api } = useContext(GlobalContext)
 
   const [showLogin, setShowLogin] = useState(true)
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    fetch("/items")
+    fetch(`${api}/items`)
     .then(r => r.json())
     .then(itemsData => {
       setItems(itemsData)
@@ -31,7 +31,7 @@ export default function LoginPage() {
 
       {showLogin ? (
         <>
-          <LoginForm setCurrentUser={setCurrentUser} redirect={redirect} />
+          <LoginForm setCurrentUser={setCurrentUser} redirect={redirect} api={api} />
           <p>
             Don't have an account? &nbsp;
             <button onClick={() => setShowLogin(false)}>

@@ -1,12 +1,12 @@
 import { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 
-import { GlobalContext } from "../AppVite"
+import { GlobalContext } from "../App"
 
 
 export default function BowlDetail({ bowl }) {
 
-  const { currentUser } = useContext(GlobalContext)
+  const { currentUser, history, api, setErrors } = useContext(GlobalContext)
 
   const [likes, setLikes] = useState(bowl.likes)
 
@@ -25,8 +25,13 @@ export default function BowlDetail({ bowl }) {
     return <li>{veggie.slice(1, veggie.length-1)}</li>
   })
 
+  const redirect = () => {
+    setErrors(["Please login to like & rate bowls."])
+    history.push("/login")
+  }
+
   function createLike() {
-    fetch(`/likes`, {
+    fetch(`${api}/likes`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
@@ -45,7 +50,7 @@ export default function BowlDetail({ bowl }) {
     const userLike = itemLikes.find((itemLike) => {
       return itemLike.user_id === currentUser.id
     })
-    fetch(`/likes/${userLike.id}`, {
+    fetch(`${api}/likes/${userLike.id}`, {
       method: "DELETE"
     })
     setLikes(likes.filter((like) => {
@@ -71,7 +76,7 @@ export default function BowlDetail({ bowl }) {
             <button onClick={() => {deleteLike()}}>🧡 Unlike this Bowl</button>
           ) : 
           (
-            <button onClick={() => {createLike()}}>♡ I like this Bowl</button>
+            <button onClick={() => {(currentUser) ? (createLike()) : (redirect())}}>♡ I like this Bowl</button>
           )
         }
         {itemLikes.length} People Liked this Bowl</span>

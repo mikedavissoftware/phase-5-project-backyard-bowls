@@ -3,7 +3,7 @@ import { useState, useEffect , useContext } from "react"
 import BowlCollection from "./BowlCollection"
 import SidesCollection from "./SidesCollection"
 
-import { GlobalContext } from "../AppVite"
+import { GlobalContext } from "../App"
 
 
 export default function Menu() {

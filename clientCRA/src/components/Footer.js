@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { NavLink } from "react-router-dom"
 import HeaderLogo from "../images/wordmark-green.png"
 
-import { GlobalContext } from "../AppVite"
+import { GlobalContext } from "../App"
 
 
 export default function Footer() {

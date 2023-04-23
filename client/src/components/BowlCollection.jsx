@@ -1,13 +1,17 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 
 import BowlCard from "./BowlCard"
+
+import { GlobalContext } from "../App"
 
 
 export default function BowlCollection({ bowls }) {
 
+  const { api } = useContext(GlobalContext)
+
   const [allLikes, setAllLikes] = useState([])
   useEffect(() => {
-    fetch("/likes")
+    fetch(`${api}/likes`)
     .then(r => r.json())
     .then(likesData => {
       setAllLikes(likesData)

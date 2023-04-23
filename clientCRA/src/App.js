@@ -17,7 +17,7 @@ export default function App() {
 
   const history = useHistory()
 
-  const api = import.meta.env.PROD ? "https://daggett-control-website.onrender.com" : "http://localhost:3000"
+  const api = "http://localhost:3000"
   
   const [errors, setErrors] = useState([])
   

@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
 
-import { GlobalContext } from "../AppVite"
+import { GlobalContext } from "../App"
 
 
-export default function LoginForm({setCurrentUser, redirect}) {
+export default function LoginForm({ setCurrentUser, redirect }) {
 
   const { errors, setErrors } = useContext(GlobalContext)
 
@@ -12,7 +12,7 @@ export default function LoginForm({setCurrentUser, redirect}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("/login", {
+    fetch(`${api}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

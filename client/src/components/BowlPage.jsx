@@ -4,14 +4,19 @@ import { useParams } from "react-router-dom"
 import CommentSection from "./CommentSection"
 import BowlDetail from "./BowlDetail"
 
+import { GlobalContext } from "../App"
+
+
 export default function BowlPage() {
+
+  const { api } = useContext(GlobalContext)
 
   const [comments, setComments] = useState([])
 
   const { id } = useParams()
   const [bowl, setBowl] = useState(null)
   useEffect(() => {
-    fetch(`/items/${id}`)
+    fetch(`${api}/items/${id}`)
     .then(r => r.json())
     .then(itemData => {
       setBowl(itemData)

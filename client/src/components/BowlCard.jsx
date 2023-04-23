@@ -1,7 +1,7 @@
 import { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 
-import { GlobalContext } from "../AppVite"
+import { GlobalContext } from "../App"
 
 
 export default function BowlCard({ bowl }) {
@@ -30,7 +30,7 @@ export default function BowlCard({ bowl }) {
   }
 
   function createLike() {
-    fetch(`/likes`, {
+    fetch(`${api}/likes`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",

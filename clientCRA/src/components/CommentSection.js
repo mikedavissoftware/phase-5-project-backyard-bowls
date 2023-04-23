@@ -4,7 +4,7 @@ import Comment from "./Comment"
 import CommentForm from "./CommentForm"
 import CommentEditForm from "./CommentEditForm"
 
-import { GlobalContext } from "../AppVite"
+import { GlobalContext } from "../App"
 
 
 export default function CommentSection({ comments, setComments }) {
