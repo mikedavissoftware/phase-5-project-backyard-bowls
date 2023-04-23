@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import { GlobalContext } from "../App"
 
 
 export default function LoginForm({setCurrentUser, redirect}) {
+
+  const { errors, setErrors } = useContext(GlobalContext)
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -25,9 +28,13 @@ export default function LoginForm({setCurrentUser, redirect}) {
     });
   }
 
-  const showErrors = errors.map((error) => {
-    return <h4 style={{color: "#dd0000"}}>{error}</h4>
-  })
+  const showErrors = (errors) ? (
+    errors.map((error) => {
+      return <h4 style={{color: "#dd0000"}}>{error}</h4>
+    })
+  ) : (
+    null
+  )
 
   return (
     <div>

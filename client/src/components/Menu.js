@@ -8,9 +8,11 @@ import { GlobalContext } from "../App"
 
 export default function Menu() {
 
+  const { api } = useContext(GlobalContext)
+
   const [allLikes, setAllLikes] = useState([])
   useEffect(() => {
-    fetch("/likes")
+    fetch(`${api}/likes`)
     .then(r => r.json())
     .then(likesData => {
       setAllLikes(likesData)
@@ -19,10 +21,10 @@ export default function Menu() {
   
   const [items, setItems] = useState([])
   useEffect(() => {
-    fetch("/items")
+    fetch(`${api}/items`)
     .then(r => r.json())
     .then(itemsData => {
-      // console.log(itemsData)
+      console.log(itemsData)
       setItems(itemsData)
     })
   }, [allLikes])

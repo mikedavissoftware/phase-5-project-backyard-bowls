@@ -6,7 +6,7 @@ import { GlobalContext } from "../App"
 
 export default function BowlCard({ bowl }) {
 
-  const { currentUser } = useContext(GlobalContext)
+  const { currentUser, history, api, setErrors } = useContext(GlobalContext)
 
   const [likes, setLikes] = useState(bowl.likes)
 
@@ -18,12 +18,16 @@ export default function BowlCard({ bowl }) {
   const [showLikeButton, setShowLikeButton] = useState(isLikedByCurrentUser)
 
   const [itemLikes, setItemLikes] = useState(bowl.likes)
-  
-  const vegList = bowl.veggies.slice(1, bowl.veggies.length-1)
-  const vegArray = vegList.split(", ")
+
+  const vegArray = JSON.parse(bowl.veggies)
   const vegComponents = vegArray.map(veggie => {
-    return <li>{veggie.slice(1, veggie.length-1)}</li>
+    return <li>{veggie}</li>
   })
+
+  const redirect = () => {
+    setErrors(["Please login to like & rate bowls."])
+    history.push("/login")
+  }
 
   function createLike() {
     fetch(`/likes`, {
@@ -45,7 +49,7 @@ export default function BowlCard({ bowl }) {
     const userLike = itemLikes.find((itemLike) => {
       return itemLike.user_id === currentUser.id
     })
-    fetch(`/likes/${userLike.id}`, {
+    fetch(`${api}/likes/${userLike.id}`, {
       method: "DELETE"
     })
     setLikes(likes.filter((like) => {
@@ -70,7 +74,7 @@ export default function BowlCard({ bowl }) {
           <button onClick={() => {deleteLike()}}>🧡 Unlike this Bowl</button>
         ) : 
         (
-          <button onClick={() => {createLike()}}>♡ I like this Bowl</button>
+          <button onClick={() => {(currentUser) ? (createLike()) : (redirect())}}>♡ I like this Bowl</button>
         )
       }
       <hr width="45%"></hr>

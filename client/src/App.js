@@ -16,11 +16,15 @@ export const GlobalContext = createContext()
 export default function App() {
 
   const history = useHistory()
+
+  const api = import.meta.env.PROD ? "https://daggett-control-website.onrender.com" : "http://localhost:3000"
+  
+  const [errors, setErrors] = useState([])
   
   const [currentUser, setCurrentUser] = useState(null)
   useEffect(() => {
     // auto-login
-    fetch("/me").then((r) => {
+    fetch(`${api}/me`).then((r) => {
       if (r.ok) {
         r.json().then((currentUser) => {
           setCurrentUser(currentUser)
@@ -29,11 +33,9 @@ export default function App() {
     });
   }, []);
 
-  const api = "http://localhost:3000"
-
   return (
     <div className="App">
-    <GlobalContext.Provider value={{ currentUser, setCurrentUser, history, api }}>
+    <GlobalContext.Provider value={{ currentUser, setCurrentUser, history, api, errors, setErrors }}>
       <Header />
       
       <Switch>
@@ -47,7 +49,7 @@ export default function App() {
           <AccountPage />
         </Route>
         <Route path="/login">
-          <LoginPage currentUser={currentUser} setCurrentUser={setCurrentUser} history={history} />
+          <LoginPage />
         </Route>
         <Route path="/">
           <Home />
