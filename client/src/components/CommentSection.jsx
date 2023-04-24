@@ -43,7 +43,7 @@ export default function CommentSection({ comments, setComments }) {
   if (!currentUser) return (
     <div className="comments-container">
       <hr width="60%"></hr>
-      <h2>Comments on this Bowl</h2>
+      <h2>Ratings of this Bowl</h2>
       {commentComponentsNoUser}
     </div>
   )
@@ -51,7 +51,7 @@ export default function CommentSection({ comments, setComments }) {
   return (
     <div className="comments-container">
       <hr width="60%"></hr>
-      <h2>Comments on this Bowl</h2>
+      <h2>Ratings of this Bowl</h2>
       {(currentUserComments.length > 0) ? (
         <></>
         // <CommentEditForm itemId={comments[0].item_id} currentUserComments={currentUserComments} currentUser={currentUser} comments={comments} setComments={setComments} />

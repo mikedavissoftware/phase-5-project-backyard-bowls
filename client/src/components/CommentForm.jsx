@@ -1,8 +1,13 @@
-import {useState} from "react"
+import { useState, useContext } from "react"
 
 import Comment from "./Comment"
 
-export default function CommentForm({itemId, currentUser, comments, setComments}) {
+import { GlobalContext } from "../App"
+
+
+export default function CommentForm({itemId, comments, setComments}) {
+
+  const { currentUser, api } = useContext(GlobalContext)
 
   const [showCommentForm, setShowCommentForm] = useState(false)
   function toggleCommentForm() {
@@ -38,7 +43,7 @@ export default function CommentForm({itemId, currentUser, comments, setComments}
 
     console.log("submit button pushed")
 
-    fetch(`/comments`, {
+    fetch(`${api}/comments`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
@@ -49,6 +54,7 @@ export default function CommentForm({itemId, currentUser, comments, setComments}
     .then(newComment => {
       console.log(newComment)
       console.log(comments)
+      setComments([newComment, ...comments])
     })
 
     setFormData(newForm)
