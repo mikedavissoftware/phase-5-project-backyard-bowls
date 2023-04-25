@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { Link } from "react-router-dom"
 
 import Comment from "./Comment"
 import CommentForm from "./CommentForm"
@@ -44,6 +45,7 @@ export default function CommentSection({ comments, setComments }) {
     <div className="comments-container">
       <hr width="60%"></hr>
       <h2>Ratings of this Bowl</h2>
+      <h4>Please <Link to="/login">log in</Link> to rate this bowl.</h4>
       {commentComponentsNoUser}
     </div>
   )
