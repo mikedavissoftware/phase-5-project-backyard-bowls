@@ -1,18 +1,14 @@
-import { useState, useEffect , useContext } from "react"
+import { useState, useEffect } from "react"
 
 import BowlCollection from "./BowlCollection"
 import SidesCollection from "./SidesCollection"
 
-import { GlobalContext } from "../App"
-
 
 export default function Menu() {
 
-  const { api } = useContext(GlobalContext)
-
   const [allLikes, setAllLikes] = useState([])
   useEffect(() => {
-    fetch(`${api}/likes`)
+    fetch(`/api/likes`)
     .then(r => r.json())
     .then(likesData => {
       setAllLikes(likesData)
@@ -21,7 +17,7 @@ export default function Menu() {
   
   const [items, setItems] = useState([])
   useEffect(() => {
-    fetch(`${api}/items`)
+    fetch(`/api/items`)
     .then(r => r.json())
     .then(itemsData => {
       console.log(itemsData)

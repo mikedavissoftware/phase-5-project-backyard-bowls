@@ -1,21 +1,19 @@
-import { useState, useEffect , useContext, createContext } from "react"
+import { useState, useEffect } from "react"
 
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
-import { GlobalContext } from "../App"
-
 
 export default function LoginPage() {
 
-  const { history, api } = useContext(GlobalContext)
-
   const [showLogin, setShowLogin] = useState(true)
 
-  const [items, setItems] = useState([])
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
+  const [items, setItems] = useState([])
   useEffect(() => {
-    fetch(`${api}/items`)
+    fetch(`/api/items`)
     .then(r => r.json())
     .then(itemsData => {
       setItems(itemsData)
@@ -28,7 +26,7 @@ export default function LoginPage() {
 
       {showLogin ? (
         <>
-          <LoginForm />
+          <LoginForm username={username} setUsername={setUsername} password={password} setPassword={setPassword} />
           <p>
             Don't have an account? &nbsp;
             <button onClick={() => setShowLogin(false)}>
@@ -38,7 +36,7 @@ export default function LoginPage() {
         </>
       ) : (
         <>
-          <SignupForm items={items} />
+          <SignupForm items={items} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />
           <p>
             Already have an account?
             <button onClick={() => setShowLogin(true)}>

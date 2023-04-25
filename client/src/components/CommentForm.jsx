@@ -7,7 +7,7 @@ import { GlobalContext } from "../App"
 
 export default function CommentForm({itemId, comments, setComments}) {
 
-  const { currentUser, api } = useContext(GlobalContext)
+  const { currentUser } = useContext(GlobalContext)
 
   const [showCommentForm, setShowCommentForm] = useState(false)
   function toggleCommentForm() {
@@ -43,7 +43,7 @@ export default function CommentForm({itemId, comments, setComments}) {
 
     console.log("submit button pushed")
 
-    fetch(`${api}/comments`, {
+    fetch(`/api/comments`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",

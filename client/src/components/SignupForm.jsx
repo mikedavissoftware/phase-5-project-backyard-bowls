@@ -3,21 +3,21 @@ import { useState, useEffect , useContext } from "react"
 import { GlobalContext } from "../App"
 
 
-export default function SignupForm({ items }) {
+export default function SignupForm({ items, username, setUsername, password, setPassword }) {
 
-  const { currentUser, setCurrentUser, api, history, errors, setErrors } = useContext(GlobalContext)
+  const { currentUser, setCurrentUser, history, errors, setErrors } = useContext(GlobalContext)
 
   const redirect = () => {
-    history.push('/account');
+    history.push('/me');
   }
 
   const newForm = {
-    username:'',
-    password:'',
-    passwordConfirmation:'',
-    image:'',
-    favBowl:'',
-    diet:''
+    username: username,
+    password: password,
+    passwordConfirmation: '',
+    image: '',
+    favBowl: '',
+    diet: ''
   }
   const [formData, setFormData] = useState(newForm)
 
@@ -49,15 +49,15 @@ export default function SignupForm({ items }) {
     e.preventDefault();
     
     const formSubmit = {
-      username: formData.username,
-      password: formData.password,
+      username: username,
+      password: password,
       password_confirmation: formData.passwordConfirmation,
       image: formData.image,
       fav_bowl: formData.favBowl,
       diet: formData.diet
     }
 
-    fetch("/signup", {
+    fetch("/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,32 +75,44 @@ export default function SignupForm({ items }) {
     redirect()
   }
 
+  const showErrors = (errors) ? (
+    errors.map((error) => {
+      return <h4 style={{color: "#dd0000"}}>{error}</h4>
+    })
+  ) : (
+    null
+  )
+
   if (!items) return <h2>Loading...</h2>
 
   return (
     <div>
+      <h2>Create Your Account:</h2>
+
+      {showErrors}
+
       <form onSubmit={handleSubmit}>
-        <label><strong>Username:</strong></label>
+        <label><strong>Username: </strong></label>
         <input 
           type="text" 
           name="username" 
           placeholder="Enter username..." 
-          value={formData.username} 
-          onChange={handleChange} 
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <br></br>
-        <label><strong>Password:</strong></label>
+        <label><strong>Password: </strong></label>
         <input 
           type="password" 
           name="password" 
           placeholder="Enter password..." 
-          value={formData.password} 
-          onChange={handleChange} 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <br></br>
-        <label><strong>Confirm Password:</strong></label>
+        <label><strong>Confirm Password: </strong></label>
         <input 
           type="password" 
           name="passwordConfirmation" 
@@ -110,7 +122,7 @@ export default function SignupForm({ items }) {
         />
 
         <br></br>
-        <label><strong>Image:</strong></label>
+        <label><strong>Image: </strong></label>
         <input 
           type="text" 
           name="image" 
@@ -120,12 +132,14 @@ export default function SignupForm({ items }) {
         />
 
         <br></br>
+        <label><strong>Favorite Bowl: </strong></label>
         <select name="favBowl" onChange={handleChange}>
           <option value={"unspecified"} disabled selected>Select Your Favorite Bowl...</option>
           {bowlOptions}
         </select>
 
         <br></br>
+        <label><strong>Diet: </strong></label>
         <select name="diet" onChange={handleChange}>
           <option value={"unspecified"} disabled selected>Select Your Diet...</option>
           {dietOptions}

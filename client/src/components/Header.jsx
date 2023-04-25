@@ -10,7 +10,7 @@ export default function Header() {
   const { currentUser, setCurrentUser } = useContext(GlobalContext)
 
   function handleLogoutClick() {
-    fetch("/logout", { method: "DELETE" }).then((r) => {
+    fetch("/api/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setCurrentUser(null);
       }

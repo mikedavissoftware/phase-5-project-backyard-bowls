@@ -3,20 +3,17 @@ import { useState, useContext } from "react";
 import { GlobalContext } from "../App"
 
 
-export default function LoginForm() {
+export default function LoginForm({ username, setUsername, password, setPassword }) {
 
-  const { setCurrentUser, api, history, errors, setErrors } = useContext(GlobalContext)
+  const { setCurrentUser, history, errors, setErrors } = useContext(GlobalContext)
 
   const redirect = () => {
     history.push('/menu');
   }
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
   function handleSubmit(e) {
     e.preventDefault();
-    fetch(`${api}/login`, {
+    fetch(`/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +39,10 @@ export default function LoginForm() {
 
   return (
     <div>
+      <h2>Log Into Your Account:</h2>
+
       {showErrors}
+
       <form  onSubmit={handleSubmit}>
         <label><strong>Username: </strong></label>
         <input

@@ -1,4 +1,4 @@
-import {useState} from "react"
+import { useState } from "react"
 
 export default function CommentEditForm({shownComment, setShowEditForm}) {
 
@@ -29,7 +29,7 @@ export default function CommentEditForm({shownComment, setShowEditForm}) {
 
     console.log("submit button pushed")
 
-    fetch(`/comments/${shownComment.id}`, {
+    fetch(`/api/comments/${shownComment.id}`, {
       method: "PATCH",
       headers: {
           "Content-Type": "application/json",

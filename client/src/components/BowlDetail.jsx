@@ -8,7 +8,7 @@ import Placeholder from "../assets/bowl-placeholder-2.png"
 
 export default function BowlDetail({ bowl }) {
 
-  const { currentUser, history, api, setErrors } = useContext(GlobalContext)
+  const { currentUser, history, setErrors } = useContext(GlobalContext)
 
   const [likes, setLikes] = useState(bowl.likes)
 
@@ -33,7 +33,7 @@ export default function BowlDetail({ bowl }) {
   }
 
   function createLike() {
-    fetch(`${api}/likes`, {
+    fetch(`/api/likes`, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default function BowlDetail({ bowl }) {
     const userLike = itemLikes.find((itemLike) => {
       return itemLike.user_id === currentUser.id
     })
-    fetch(`${api}/likes/${userLike.id}`, {
+    fetch(`/api/likes/${userLike.id}`, {
       method: "DELETE"
     })
     setLikes(likes.filter((like) => {

@@ -1,14 +1,14 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 
 import CommentEditForm from "./CommentEditForm"
 
-export default function Comment({comment, currentUser, setComments}) {
+export default function Comment({ comment, currentUser, setComments }) {
 
   const [shownComment, setShownComment] = useState(comment)
   const [showEditForm, setShowEditForm] = useState(false)
 
   useEffect(() => {
-    fetch(`/comments/${comment.id}`)
+    fetch(`/api/comments/${comment.id}`)
     .then(r => r.json())
     .then(commentData => {
       setShownComment(commentData)
@@ -18,10 +18,10 @@ export default function Comment({comment, currentUser, setComments}) {
   const {content, rating, user} = shownComment
 
   function deleteComment() {
-    fetch(`/comments/${comment.id}`, {
+    fetch(`/api/comments/${comment.id}`, {
       method: "DELETE",
     })
-    fetch("/comments")
+    fetch("/api/comments")
     .then(r => r.json())
     .then(commentsData => {
       setComments(commentsData)

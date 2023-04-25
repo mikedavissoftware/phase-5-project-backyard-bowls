@@ -1,4 +1,4 @@
-import { useState, useEffect , useContext } from "react"
+import { useState, useEffect, useContext } from "react"
 
 import { GlobalContext } from "../App"
 
@@ -15,7 +15,7 @@ export default function AccountPage() {
   }
 
   useEffect(() => {
-    fetch("/items")
+    fetch("/api/items")
     .then(r => r.json())
     .then(items => {
       const otherNameValues = items.filter((item) => {
@@ -58,14 +58,14 @@ export default function AccountPage() {
     favBowl:'',
     diet:''
   }
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState((currentUser) ? ({
     username: currentUser.username,
     password: "",
     passwordConfirmation: "",
     image: currentUser.image,
     favBowl: currentUser.fav_bowl,
     diet: currentUser.diet
-  })
+  }) : (newForm))
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -86,7 +86,7 @@ export default function AccountPage() {
       diet: formData.diet
     };
 
-    fetch("/me", {
+    fetch("/api/me", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +113,7 @@ export default function AccountPage() {
   }
 
   function deleteAccount() {
-    fetch("/me",{
+    fetch("/api/me",{
       method: "DELETE"
     })
     setCurrentUser(null)
