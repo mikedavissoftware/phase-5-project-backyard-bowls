@@ -29,4 +29,4 @@
 /config/master.key
 
 # Ignore sqlite3 files
-/db/*.sqlite3
+*.sqlite3
