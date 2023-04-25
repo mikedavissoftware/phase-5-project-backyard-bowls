@@ -1,9 +1,15 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect , useContext } from "react"
+
+import { GlobalContext } from "../App"
 
 
-export default function SignupForm({items, currentUser, setCurrentUser, redirect}) {
+export default function SignupForm({ items }) {
 
-  const [errors, setErrors] = useState([]);
+  const { currentUser, setCurrentUser, api, history, errors, setErrors } = useContext(GlobalContext)
+
+  const redirect = () => {
+    history.push('/account');
+  }
 
   const newForm = {
     username:'',

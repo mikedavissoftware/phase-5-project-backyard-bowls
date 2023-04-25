@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 
 import { GlobalContext } from "../App"
 
+import Placeholder from "../assets/bowl-placeholder-2.png"
+
 
 export default function BowlCard({ bowl }) {
 
@@ -66,7 +68,7 @@ export default function BowlCard({ bowl }) {
       <h2><Link to={`/items/${bowl.id}`}>{bowl.name}</Link></h2>
       <h3>$8 small / $13 large</h3>
       <h3>{itemLikes.length} People Liked this Bowl</h3>
-      <img src={bowl.image} style={{height: "150px"}}></img>
+      <img src={Placeholder} style={{height: "150px"}}></img>
       <br></br>
       {
         showLikeButton ? 

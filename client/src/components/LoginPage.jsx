@@ -8,9 +8,10 @@ import { GlobalContext } from "../App"
 
 export default function LoginPage() {
 
-  const { currentUser, setCurrentUser, history, api } = useContext(GlobalContext)
+  const { history, api } = useContext(GlobalContext)
 
   const [showLogin, setShowLogin] = useState(true)
+
   const [items, setItems] = useState([])
 
   useEffect(() => {
@@ -22,16 +23,12 @@ export default function LoginPage() {
     })
   }, [showLogin])
 
-  const redirect = () => {
-    history.push('/menu');
-  }
-
   return (
     <div>
 
       {showLogin ? (
         <>
-          <LoginForm setCurrentUser={setCurrentUser} redirect={redirect} api={api} />
+          <LoginForm />
           <p>
             Don't have an account? &nbsp;
             <button onClick={() => setShowLogin(false)}>
@@ -41,7 +38,7 @@ export default function LoginPage() {
         </>
       ) : (
         <>
-          <SignupForm items={items} currentUser={currentUser} setCurrentUser={setCurrentUser} redirect={redirect} />
+          <SignupForm items={items} />
           <p>
             Already have an account?
             <button onClick={() => setShowLogin(true)}>
