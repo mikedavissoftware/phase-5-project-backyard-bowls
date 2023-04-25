@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :comments
   resources :items
 
-  get '/hello', to: 'application#hello_world'
+  root 'application#hello_world'
 
   post '/signup', to: 'users#create'
   patch '/me', to: 'users#update'
