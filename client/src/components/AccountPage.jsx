@@ -5,7 +5,7 @@ import { GlobalContext } from "../App"
 
 export default function AccountPage() {
 
-  const { currentUser, setCurrentUser, history } = useContext(GlobalContext)
+  const { currentUser, setCurrentUser, history, errors, setErrors } = useContext(GlobalContext)
 
   const [bowlOptions, setBowlOptions] = useState([])
   const [dietOptions, setDietOptions] = useState([])
@@ -75,7 +75,7 @@ export default function AccountPage() {
 
   function submitEdits(e) {
     e.preventDefault();
-    // setErrors([]);
+    setErrors([]);
 
     const editAccount = {
       username: formData.username,
@@ -93,23 +93,28 @@ export default function AccountPage() {
       },
       body: JSON.stringify(editAccount),
     })
-    .then((r) => r.json())
-    .then((editedAccount) => {
-      console.log(editedAccount)
-      setCurrentUser(editedAccount)
-      setFormData({
-        username: editedAccount.username,
-        password: "",
-        passwordConfirmation: "",
-        image: editedAccount.image,
-        favBowl: editedAccount.fav_bowl,
-        diet: editedAccount.diet
-      })
-      console.log(currentUser)
-      console.log(formData)
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((editedAccount) => {
+          console.log(editedAccount)
+          setCurrentUser(editedAccount)
+          setFormData({
+            username: editedAccount.username,
+            password: "",
+            passwordConfirmation: "",
+            image: editedAccount.image,
+            favBowl: editedAccount.fav_bowl,
+            diet: editedAccount.diet
+          })
+          console.log(currentUser)
+          console.log(formData)
+        })
+    
+        setShowAccountEdit(false)
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
     })
-
-    setShowAccountEdit(false)
   }
 
   function deleteAccount() {
@@ -120,10 +125,20 @@ export default function AccountPage() {
     redirect()
   }
 
+  const showErrors = (errors) ? (
+    errors.map((error) => {
+      return <h4 style={{color: "#dd0000"}}>{error}</h4>
+    })
+  ) : (
+    null
+  )
+
   if (!currentUser) return <h2>Loading...</h2>
 
   return (
     <div>
+      {showErrors}
+
       <img src={currentUser.image} style={{marginTop: "20px", width: "45%"}}></img>
       <p><strong>Username: </strong>{currentUser.username}</p>
       <p><strong>Favorite Bowl: </strong>{currentUser.fav_bowl}</p>
