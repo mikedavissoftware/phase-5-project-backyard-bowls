@@ -5,11 +5,12 @@ import Comment from "./Comment"
 import { GlobalContext } from "../App"
 
 
-export default function CommentForm({itemId, comments, setComments}) {
+export default function CommentForm({ itemId, isCurrentUserComment, setIsCurrentUserComment }) {
 
   const { currentUser } = useContext(GlobalContext)
 
   const [showCommentForm, setShowCommentForm] = useState(false)
+
   function toggleCommentForm() {
     setShowCommentForm(!showCommentForm)
   }
@@ -41,8 +42,6 @@ export default function CommentForm({itemId, comments, setComments}) {
   function submitComment(e) {
     // e.preventDefault()
 
-    console.log("submit button pushed")
-
     fetch(`/api/comments`, {
       method: "POST",
       headers: {
@@ -53,13 +52,13 @@ export default function CommentForm({itemId, comments, setComments}) {
     .then(r => r.json())
     .then(newComment => {
       console.log(newComment)
-      console.log(comments)
-      setComments([newComment, ...comments])
     })
-
+    setIsCurrentUserComment(true)
     setFormData(newForm)
-    setShowCommentForm(false)
+    toggleCommentForm()
   }
+
+  if (isCurrentUserComment) return null
 
   return (
     <div>

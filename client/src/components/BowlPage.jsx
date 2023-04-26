@@ -7,11 +7,7 @@ import BowlDetail from "./BowlDetail"
 
 export default function BowlPage() {
 
-  const [comments, setComments] = useState([])
-
   const { id } = useParams()
-
-  console.log(id)
 
   const [bowl, setBowl] = useState(null)
   useEffect(() => {
@@ -19,19 +15,15 @@ export default function BowlPage() {
     .then(r => r.json())
     .then(itemData => {
       setBowl(itemData)
-      setComments(itemData.comments)
     })
-  }, [id])
+  }, [])
 
   if (!bowl) return <h2>Loading...</h2>
 
   return (
     <>
-    {/* <div className="items-container">
-      <BowlCard key={bowl.id} bowl={bowl} currentUser={currentUser} />
-    </div> */}
     <BowlDetail bowl={bowl} />
-    <CommentSection comments={comments} setComments={setComments} />
+    <CommentSection bowlId={id} />
     </>
   )
 }

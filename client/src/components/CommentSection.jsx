@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import Comment from "./Comment"
@@ -8,59 +8,45 @@ import CommentEditForm from "./CommentEditForm"
 import { GlobalContext } from "../App"
 
 
-export default function CommentSection({ comments, setComments }) {
+export default function CommentSection({ bowlId }) {
 
   const { currentUser } = useContext(GlobalContext)
 
-  const currentUserComments = (currentUser) ? (
-    comments.filter((comment) => {
-      return comment.user.id === currentUser.id
+  console.log(currentUser)
+
+  const [commentComponents, setCommentComponents] = useState([])
+  const [isCurrentUserComment, setIsCurrentUserComment] = useState(false)
+  useEffect(() => {
+    fetch(`/api/comments_by_item/${bowlId}`)
+    .then(r => r.json())
+    .then(commentsData => {
+      const currentUserComment = (currentUser) ? (commentsData.filter((comment) => {return comment.user_id === currentUser.id})) : ([])
+      const otherUserComments = (currentUser) ? (commentsData.filter((comment) => {return comment.user_id !== currentUser.id})) : (commentsData)
+      const allComments = [...currentUserComment, ...otherUserComments]
+
+      setCommentComponents(
+        allComments.map((comment) => {
+          return <Comment key={comment.id} comment={comment} currentUserComment={currentUserComment} setIsCurrentUserComment={setIsCurrentUserComment} />
+        })
+      )
+      setIsCurrentUserComment(Boolean(commentsData.find((comment) => {return comment.user_id === currentUser.id})))
+      console.log("fetched")
     })
-  ) : (
-    []
-  )
+  }, [isCurrentUserComment])
 
-  const otherUserComments = (currentUser) ? (
-    comments.filter((comment) => {
-      return comment.user.id !== currentUser.id
-    })
-  ) : (
-    comments
-  )
-
-  const commentsArray = (currentUserComments !== []) ? (
-    [...currentUserComments, ...otherUserComments]
-  ) : (
-    otherUserComments
-  )
-
-  const commentComponentsUser = commentsArray.map((comment) => {
-    return <Comment key={comment.id} comment={comment} currentUser={currentUser} setComments={setComments} />
-  })
-  const commentComponentsNoUser = commentsArray.map((comment) => {
-    return <Comment key={comment.id} comment={comment} setComments={setComments} />
-  })
-
-  if (!currentUser) return (
-    <div className="comments-container">
-      <hr width="60%"></hr>
-      <h2>Ratings of this Bowl</h2>
-      <h4>Please <Link to="/login">log in</Link> to rate this bowl.</h4>
-      {commentComponentsNoUser}
-    </div>
-  )
+  if (!commentComponents) return <h4>Loading...</h4>
 
   return (
     <div className="comments-container">
       <hr width="60%"></hr>
       <h2>Ratings of this Bowl</h2>
-      {(currentUserComments.length > 0) ? (
-        <></>
-        // <CommentEditForm itemId={comments[0].item_id} currentUserComments={currentUserComments} currentUser={currentUser} comments={comments} setComments={setComments} />
+      {(!currentUser) ? (
+        <h4>Please <Link to="/login">log in</Link> to rate this bowl.</h4>
       ) : (
-        <CommentForm itemId={comments[0].item_id} currentUser={currentUser} setComments={setComments} />
+        <CommentForm itemId={bowlId} isCurrentUserComment={isCurrentUserComment} setIsCurrentUserComment={setIsCurrentUserComment} />
       )}
-      {commentComponentsUser}
+
+      {commentComponents}
     </div>
   )
 }

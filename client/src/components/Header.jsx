@@ -17,6 +17,8 @@ export default function Header() {
     });
   }
 
+  console.log(currentUser)
+
   return (
     // <div className="bg-banner bg-center bg-cover bg-white-50">
     <div className="App-header">

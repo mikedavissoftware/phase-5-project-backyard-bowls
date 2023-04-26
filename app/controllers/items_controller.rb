@@ -3,12 +3,12 @@ class ItemsController < ApplicationController
 
   def index
     items = Item.all
-    render json: items
+    render json: items, include: ['likes']
   end
 
   def show
     item = Item.find(params[:id])
-    render json: item, include: ['likes', 'comments.user']
+    render json: item, include: ['likes']
   end
 
 end

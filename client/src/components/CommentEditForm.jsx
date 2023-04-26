@@ -1,10 +1,10 @@
 import { useState } from "react"
 
-export default function CommentEditForm({shownComment, setShowEditForm}) {
+export default function CommentEditForm({ comment, setShowEditForm, setIsCurrentUserComment }) {
 
   function numberOptions(max) {        
     const numbersArray = []
-    for (let i=0; i<max; i++) {
+    for (let i=0; i<=max; i++) {
         numbersArray.push(
             <option value={i}>{i}</option>
         )
@@ -29,7 +29,7 @@ export default function CommentEditForm({shownComment, setShowEditForm}) {
 
     console.log("submit button pushed")
 
-    fetch(`/api/comments/${shownComment.id}`, {
+    fetch(`/api/comments/${comment.id}`, {
       method: "PATCH",
       headers: {
           "Content-Type": "application/json",
@@ -39,6 +39,7 @@ export default function CommentEditForm({shownComment, setShowEditForm}) {
 
     setFormData(newForm)
     setShowEditForm(false)
+    setIsCurrentUserComment(false)
   }
 
   return (
@@ -47,7 +48,7 @@ export default function CommentEditForm({shownComment, setShowEditForm}) {
         <label><strong>Rating: </strong></label>
         <br></br>
         <select name="rating" onChange={(e) => {handleChange(e)}}>
-          {numberOptions(11)}
+          {numberOptions(10)}
         </select>
         <br></br>
 
@@ -59,7 +60,7 @@ export default function CommentEditForm({shownComment, setShowEditForm}) {
           rows="5"
           cols="50"
           value={formData.content}
-          placeholder={`Change from "${shownComment.content}"`}
+          placeholder={`Change from "${comment.content}"`}
           onChange={(e) => {handleChange(e)}}
         ></textarea>
 

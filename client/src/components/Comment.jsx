@@ -1,32 +1,42 @@
-import { useState, useEffect } from "react"
+import { useState, useContext } from "react"
 
 import CommentEditForm from "./CommentEditForm"
 
-export default function Comment({ comment, currentUser, setComments }) {
+import { GlobalContext } from "../App"
 
-  const [shownComment, setShownComment] = useState(comment)
+
+export default function Comment({ comment, currentUserComment, setIsCurrentUserComment }) {
+
+  const { currentUser } = useContext(GlobalContext)
+
   const [showEditForm, setShowEditForm] = useState(false)
 
-  useEffect(() => {
-    fetch(`/api/comments/${comment.id}`)
-    .then(r => r.json())
-    .then(commentData => {
-      setShownComment(commentData)
-    })
-  }, [showEditForm])
+  const {content, rating, user} = comment
 
-  const {content, rating, user} = shownComment
+  let conditionalAttributes = {
+    title: "",
+    possessive: ""
+  }
+
+  console.log(currentUser)
+
+  if (currentUserComment[0] && comment.user_id === currentUserComment[0].user_id) {
+    conditionalAttributes.title = "You"
+    conditionalAttributes.possessive = "Your"
+  } else {
+    conditionalAttributes.title = comment.user.username
+    conditionalAttributes.possessive = `${comment.user.username}'s`
+  }
+
+  console.log(conditionalAttributes)
 
   function deleteComment() {
+    // e.preventDefault()
+
     fetch(`/api/comments/${comment.id}`, {
       method: "DELETE",
     })
-    fetch("/api/comments")
-    .then(r => r.json())
-    .then(commentsData => {
-      setComments(commentsData)
-      console.log(commentsData)
-    })
+    setIsCurrentUserComment(false)
   }
 
   if (!comment) return <h3>Loading...</h3>
@@ -35,13 +45,13 @@ export default function Comment({ comment, currentUser, setComments }) {
     <div>
       <div className="comment">
         <div className="comment-picture">
-          <img src={user.image}></img>
+          <img src={comment.user.image}></img>
         </div>
         <div className="comment-content">
-          <h3>{user.username} rated this bowl {rating}/10</h3>
+          <h3>{conditionalAttributes.title} rated this bowl {rating}/10</h3>
           <p>{content}</p>
-          <p><em>{user.username}'s favorite bowl is <strong>{user.fav_bowl}</strong></em></p>
-          {(currentUser && user.id === currentUser.id) ? (
+          <p><em>{conditionalAttributes.possessive} favorite bowl is <strong>{user.fav_bowl}</strong></em></p>
+          {(currentUserComment[0] && currentUserComment[0].id === comment.id) ? (
             <span>
               {(!showEditForm) ? (
                 <button onClick={() => setShowEditForm(true)}>Edit My Comment</button>
@@ -56,7 +66,7 @@ export default function Comment({ comment, currentUser, setComments }) {
         </div>
       </div>
       {(showEditForm) ? (
-        <CommentEditForm itemId={comment.item_id} shownComment={shownComment} setShowEditForm={setShowEditForm} />
+        <CommentEditForm comment={comment} setShowEditForm={setShowEditForm} setIsCurrentUserComment={setIsCurrentUserComment} />
       ) : (
         <></>
       )}
