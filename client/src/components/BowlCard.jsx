@@ -10,6 +10,10 @@ export default function BowlCard({ bowl }) {
 
   const { currentUser, history, setErrors } = useContext(GlobalContext)
 
+  console.log(bowl)
+
+  const { name, category, image, base, protein, veggies, dressing, price } = bowl
+
   const [likes, setLikes] = useState(bowl.likes)
 
   const isLikedByCurrentUser = (currentUser) ? (
@@ -64,30 +68,40 @@ export default function BowlCard({ bowl }) {
   }
 
   return (
-    <div className="item" style={{width: "fit-content", padding: "15px"}}>
-      <h2><Link to={`/items/${bowl.id}`}>{bowl.name}</Link></h2>
-      <h3>$8 small / $13 large</h3>
-      <h3>{itemLikes.length} People Liked this Bowl</h3>
-      <img src={Placeholder} style={{height: "150px"}}></img>
-      <br></br>
-      {
-        showLikeButton ? 
-        (
-          <button onClick={() => {deleteLike()}}>🧡 Unlike this Bowl</button>
-        ) : 
-        (
-          <button onClick={() => {(currentUser) ? (createLike()) : (redirect())}}>♡ I like this Bowl</button>
-        )
-      }
-      <hr width="45%"></hr>
-      <h3>Ingredients:</h3>
-      <p><strong>Base: </strong>{bowl.base}</p>
-      <p><strong>Protein: </strong>{bowl.protein}</p>
-      <p><strong>Veggies: </strong></p>
-      <ul>
-        {vegComponents}
-      </ul>
-      <p><strong>Dressing: </strong>{bowl.dressing}</p>
+    // <div className="item" style={{width: "fit-content", padding: "15px"}}>
+    //   <h2><Link to={`/items/${bowl.id}`}>{bowl.name}</Link></h2>
+    //   <h3>$8 small / $13 large</h3>
+    //   <h3>{itemLikes.length} People Liked this Bowl</h3>
+    //   <img src={Placeholder} style={{height: "150px"}}></img>
+    //   <br></br>
+    //   {
+    //     showLikeButton ? 
+    //     (
+    //       <button onClick={() => {deleteLike()}}>🧡 Unlike this Bowl</button>
+    //     ) : 
+    //     (
+    //       <button onClick={() => {(currentUser) ? (createLike()) : (redirect())}}>♡ I like this Bowl</button>
+    //     )
+    //   }
+    //   <hr width="45%"></hr>
+    //   <h3>Ingredients:</h3>
+    //   <p><strong>Base: </strong>{bowl.base}</p>
+    //   <p><strong>Protein: </strong>{bowl.protein}</p>
+    //   <p><strong>Veggies: </strong></p>
+    //   <ul>
+    //     {vegComponents}
+    //   </ul>
+    //   <p><strong>Dressing: </strong>{bowl.dressing}</p>
+    // </div>
+    <div className="card w-96 bg-base-100 shadow-xl image-full m-5 mx-auto">
+      <figure><img src={Placeholder} alt="Shoes" /></figure>
+      <div className="card-body">
+        <h2 className="card-title">{name}</h2>
+        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <div className="card-actions justify-end">
+          <button className="btn btn-primary">Buy Now</button>
+        </div>
+      </div>
     </div>
   )
 }

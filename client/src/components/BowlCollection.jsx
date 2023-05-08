@@ -20,7 +20,7 @@ export default function BowlCollection({ bowls }) {
   })
 
   return (
-    <div className="items-container">
+    <div className="grid grid-cols-2 mx-auto max-w-screen-lg bg-white rounded-lg">
       {bowlCards}
     </div>
   )
