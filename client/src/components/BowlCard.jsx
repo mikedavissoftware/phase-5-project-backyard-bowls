@@ -34,6 +34,10 @@ export default function BowlCard({ bowl }) {
     setErrors(["Please login to like & rate bowls."])
     history.push("/login")
   }
+    
+  const redirectBowlPage = () => {
+    history.push(`/items/${bowl.id}`)
+  }
 
   function createLike() {
     fetch(`/api/likes`, {
@@ -93,13 +97,36 @@ export default function BowlCard({ bowl }) {
     //   </ul>
     //   <p><strong>Dressing: </strong>{bowl.dressing}</p>
     // </div>
-    <div className="card w-96 bg-base-100 shadow-xl image-full m-5 mx-auto">
-      <figure><img src={Placeholder} alt="Shoes" /></figure>
-      <div className="card-body">
-        <h2 className="card-title">{name}</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+    // <div className="card w-96 bg-base-100 shadow-xl image-full m-5 mx-auto">
+    //   <figure><img src={Placeholder} alt="Shoes" /></figure>
+    //   <div className="card-body">
+    //     <h2 className="card-title">{name}</h2>
+    //     <p>If a dog chews shoes whose shoes does he choose?</p>
+    //     <div className="card-actions justify-end">
+    //       <button className="btn btn-primary">Buy Now</button>
+    //     </div>
+    //   </div>
+    // </div>
+
+    <div className="item">
+      <div className="card lg:card-side bg-base-100 shadow-xl">
+        <figure><img src={bowl.image} alt="Shoes" /></figure>
+        <div className="card-body">
+          <h2 className="card-title">{bowl.name}</h2>
+          <h4 className=""></h4>
+          <p>Our <strong>{bowl.name}</strong> has our classic <strong>{bowl.base}</strong> base with <strong>{bowl.protein}</strong> as its protein, and rounding out the ingredients with <strong>{vegComponents}</strong>. Last, but not least, this delicious bowl is finished with a dressing of <strong>{bowl.dressing}</strong>. Bon appétit!</p>
+          <div className="card-actions justify-end">
+            {
+              showLikeButton ? 
+              (
+                <button className="btn btn-primary" onClick={() => {deleteLike()}}>🧡 Liked</button>
+              ) : 
+              (
+                <button className="btn btn-primary border-2 border-primary" onClick={() => {createLike()}}>♡ Click to Like</button>
+              )
+            }
+            <button className="btn btn-primary" onClick={redirectBowlPage}>More Details</button>
+          </div>
         </div>
       </div>
     </div>
