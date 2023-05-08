@@ -20,8 +20,8 @@ export default function Header() {
   console.log(currentUser)
 
   return (
-    // <div className="bg-banner bg-center bg-cover bg-white-50">
-    <div className="App-header">
+    <div className="bg-banner bg-center bg-cover bg-white-50">
+    {/* <div className="App-header"> */}
 
       <img src={HeaderLogo} alt="Backyard Bowls Logo" className="drop-shadow-dark stroke-black p-3 mx-auto" style={{width: "95%", marginBottom: "20px", maxWidth: "600px"}}/>
       <nav>
