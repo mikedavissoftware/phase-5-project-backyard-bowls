@@ -12,7 +12,7 @@ module.exports = {
         bybb: '#80b217',
       },
       backgroundImage: {
-        banner: "url('/src/images/backdrop.png')"
+        banner: "url('/src/assets/images/backdrop.png')"
       },
       dropShadow: {
         dark: '5px 5px 5px rgb(0 0 0 / 0.80)'

@@ -12,7 +12,7 @@ export default function BowlCard({ bowl }) {
 
   console.log(bowl)
 
-  const { name, category, image, base, protein, veggies, dressing, price } = bowl
+  const { id, name, category, image, base, protein, veggies, dressing, price, comments } = bowl
 
   const [likes, setLikes] = useState(bowl.likes)
 
@@ -36,7 +36,7 @@ export default function BowlCard({ bowl }) {
   }
     
   const redirectBowlPage = () => {
-    history.push(`/items/${bowl.id}`)
+    history.push(`/items/${id}`)
   }
 
   function createLike() {
@@ -72,61 +72,22 @@ export default function BowlCard({ bowl }) {
   }
 
   return (
-    // <div className="item" style={{width: "fit-content", padding: "15px"}}>
-    //   <h2><Link to={`/items/${bowl.id}`}>{bowl.name}</Link></h2>
-    //   <h3>$8 small / $13 large</h3>
-    //   <h3>{itemLikes.length} People Liked this Bowl</h3>
-    //   <img src={Placeholder} style={{height: "150px"}}></img>
-    //   <br></br>
-    //   {
-    //     showLikeButton ? 
-    //     (
-    //       <button onClick={() => {deleteLike()}}>🧡 Unlike this Bowl</button>
-    //     ) : 
-    //     (
-    //       <button onClick={() => {(currentUser) ? (createLike()) : (redirect())}}>♡ I like this Bowl</button>
-    //     )
-    //   }
-    //   <hr width="45%"></hr>
-    //   <h3>Ingredients:</h3>
-    //   <p><strong>Base: </strong>{bowl.base}</p>
-    //   <p><strong>Protein: </strong>{bowl.protein}</p>
-    //   <p><strong>Veggies: </strong></p>
-    //   <ul>
-    //     {vegComponents}
-    //   </ul>
-    //   <p><strong>Dressing: </strong>{bowl.dressing}</p>
-    // </div>
-    // <div className="card w-96 bg-base-100 shadow-xl image-full m-5 mx-auto">
-    //   <figure><img src={Placeholder} alt="Shoes" /></figure>
-    //   <div className="card-body">
-    //     <h2 className="card-title">{name}</h2>
-    //     <p>If a dog chews shoes whose shoes does he choose?</p>
-    //     <div className="card-actions justify-end">
-    //       <button className="btn btn-primary">Buy Now</button>
-    //     </div>
-    //   </div>
-    // </div>
-
-    <div className="item">
-      <div className="card lg:card-side bg-base-100 shadow-xl">
-        <figure><img src={bowl.image} alt="Shoes" /></figure>
-        <div className="card-body">
-          <h2 className="card-title">{bowl.name}</h2>
-          <h4 className=""></h4>
-          <p>Our <strong>{bowl.name}</strong> has our classic <strong>{bowl.base}</strong> base with <strong>{bowl.protein}</strong> as its protein, and rounding out the ingredients with <strong>{vegComponents}</strong>. Last, but not least, this delicious bowl is finished with a dressing of <strong>{bowl.dressing}</strong>. Bon appétit!</p>
-          <div className="card-actions justify-end">
-            {
-              showLikeButton ? 
-              (
-                <button className="btn btn-primary" onClick={() => {deleteLike()}}>🧡 Liked</button>
-              ) : 
-              (
-                <button className="btn btn-primary border-2 border-primary" onClick={() => {createLike()}}>♡ Click to Like</button>
-              )
-            }
-            <button className="btn btn-primary" onClick={redirectBowlPage}>More Details</button>
-          </div>
+    <div className="card bg-base-100 shadow-xl image-full">
+      <figure className="p-10"><img src={Placeholder} className=""/></figure>
+      <div className="card-body">
+        <h2 className="card-title justify-center font-bold">{name}</h2>
+        <p>Our <strong>{name}</strong> has our classic <strong>{base}</strong> base with <strong>{protein}</strong> as its protein, and rounding out the ingredients with: <ul><strong>{vegComponents}</strong></ul> Last, but not least, this delicious bowl is finished with a dressing of <strong>{dressing}</strong>. Bon appétit!</p>
+        <div className="card-actions justify-end">
+          {
+            showLikeButton ? 
+            (
+              <button className="btn btn-primary" onClick={() => {deleteLike()}}>🧡</button>
+            ) : 
+            (
+              <button className="btn btn-primary border-2 border-primary" onClick={() => {(currentUser) ? (createLike()) : (redirect())}}>♡ Click to Like</button>
+            )
+          }
+          <button className="btn btn-primary" onClick={redirectBowlPage}>More Details</button>
         </div>
       </div>
     </div>
